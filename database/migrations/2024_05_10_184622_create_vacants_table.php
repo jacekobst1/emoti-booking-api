@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('vacants', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->date('date');
+            $table->date('date')->unique();
             $table->integer('number_of_beds');
 //            $table->integer('price'); TODO
             $table->timestamps();
