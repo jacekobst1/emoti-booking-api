@@ -22,6 +22,9 @@ final class Reservation extends Model
         'date_to',
     ];
 
+    /**
+     * @return BelongsToMany<Vacant>
+     */
     public function vacants(): BelongsToMany
     {
         return $this->belongsToMany(Vacant::class);

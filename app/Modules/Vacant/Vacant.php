@@ -22,6 +22,9 @@ final class Vacant extends Model
         'number_of_beds',
     ];
 
+    /**
+     * @return BelongsToMany<Reservation>
+     */
     public function reservations(): BelongsToMany
     {
         return $this->belongsToMany(Reservation::class);
