@@ -2,28 +2,28 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Vacant;
+namespace App\Modules\Reservation;
 
-use App\Modules\Reservation\Reservation;
+use App\Modules\Vacant\Vacant;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-final class Vacant extends Model
+final class Reservation extends Model
 {
     use HasUuids;
     use HasFactory;
     use HasTimestamps;
 
-    protected $fillable = [
-        'date',
-        'number_of_beds',
+    public $fillable = [
+        'date_from',
+        'date_to',
     ];
 
-    public function reservations(): BelongsToMany
+    public function vacants(): BelongsToMany
     {
-        return $this->belongsToMany(Reservation::class);
+        return $this->belongsToMany(Vacant::class);
     }
 }
