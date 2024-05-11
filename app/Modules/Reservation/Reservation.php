@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Reservation;
 
 use App\Modules\Vacant\Vacant;
+use App\Shared\Casts\Model\UuidModelCast;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,9 +21,13 @@ final class Reservation extends Model
     use HasFactory;
     use HasTimestamps;
 
-    public $fillable = [
+    protected $fillable = [
         'date_from',
         'date_to',
+    ];
+
+    protected $casts = [
+        'id' => UuidModelCast::class,
     ];
 
     /**

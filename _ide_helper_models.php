@@ -47,7 +47,7 @@ namespace App\Modules\Reservation{
 /**
  * 
  *
- * @property string $id
+ * @property mixed $id
  * @property string $date_from
  * @property string $date_to
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -73,7 +73,7 @@ namespace App\Modules\Vacant{
 /**
  * 
  *
- * @property string $id
+ * @property mixed $id
  * @property string $date
  * @property int $number_of_beds
  * @property \Illuminate\Support\Carbon|null $created_at
