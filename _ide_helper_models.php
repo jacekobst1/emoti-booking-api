@@ -52,8 +52,8 @@ namespace App\Modules\Reservation{
  * @property string $date_to
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Vacant\Vacant> $vacants
- * @property-read int|null $vacants_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Vacant\Vacant> $vacancies
+ * @property-read int|null $vacancies_count
  * @method static \Database\Factories\ReservationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation newQuery()
@@ -92,6 +92,6 @@ namespace App\Modules\Vacant{
  * @mixin \Eloquent
  */
 	#[\AllowDynamicProperties]
-	final class IdeHelperVacant {}
+	class IdeHelperVacant {}
 }
 

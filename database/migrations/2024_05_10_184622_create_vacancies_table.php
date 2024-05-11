@@ -12,7 +12,7 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('vacants', function (Blueprint $table) {
+        Schema::create('vacancies', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->date('date')->unique();
             $table->integer('number_of_beds');
@@ -26,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('vacants');
+        Schema::dropIfExists('vacancies');
     }
 };

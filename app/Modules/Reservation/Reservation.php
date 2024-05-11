@@ -39,7 +39,7 @@ final class Reservation extends Model
     /**
      * @return BelongsToMany<Vacant>
      */
-    public function vacants(): BelongsToMany
+    public function vacancies(): BelongsToMany
     {
         return $this->belongsToMany(Vacant::class);
     }

@@ -22,6 +22,8 @@ class Vacant extends Model
     use HasFactory;
     use HasTimestamps;
 
+    protected $table = 'vacancies';
+
     protected $fillable = [
         'date',
         'number_of_beds',

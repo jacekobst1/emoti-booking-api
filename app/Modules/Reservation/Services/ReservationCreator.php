@@ -36,7 +36,7 @@ final readonly class ReservationCreator
     private function storeReservation(PostReservationsRequest $data, Collection $vacancies): Reservation
     {
         $reservation = Reservation::create($data->toArray());
-        $reservation->vacants()->attach($vacancies->pluck('id')->toArray());
+        $reservation->vacancies()->attach($vacancies->pluck('id')->toArray());
 
         return $reservation;
     }

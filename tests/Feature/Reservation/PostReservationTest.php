@@ -32,7 +32,7 @@ final class PostReservationTest extends TestCase
         $response->assertSuccessful();
         $id = $response->json('data.id');
         $reservation = Reservation::find($id);
-        $this->assertSame(2, $reservation->vacants()->count());
+        $this->assertSame(2, $reservation->vacancies()->count());
     }
 
     public function testErrorOnWrongPayload(): void
