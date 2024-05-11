@@ -3,9 +3,13 @@
 declare(strict_types=1);
 
 use App\Http\Middleware\ForceJsonResponse;
+use App\Shared\Response\JsonResp;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -18,5 +22,21 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->api(ForceJsonResponse::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->renderable(function (NotFoundHttpException $e, Request $request) {
+            $message = $e->getMessage();
+
+            if (str_contains($message, 'route')) {
+                return JsonResp::routeNotFound();
+            }
+
+            if (str_contains($message, 'model')) {
+                return JsonResp::resourceNotFound();
+            }
+
+            return false;
+        });
+
+        $exceptions->renderable(function (AccessDeniedHttpException $e, Request $request) {
+            return JsonResp::unauthorized();
+        });
     })->create();
