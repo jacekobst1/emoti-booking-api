@@ -21,7 +21,7 @@ class VacantFactory extends Factory
     {
         return [
             'date' => $this->faker->date(),
-            'number_of_beds' => $this->faker->numberBetween(0, 10),
+            'number_of_beds' => $this->faker->numberBetween(1, 10),
         ];
     }
 }

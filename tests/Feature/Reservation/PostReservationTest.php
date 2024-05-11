@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Tests\Feature\Reservation;
 
 use App\Modules\Reservation\Reservation;
+use App\Modules\Vacant\Vacant;
+use Carbon\CarbonPeriod;
 use Tests\TestCase;
 
 final class PostReservationTest extends TestCase
@@ -13,6 +15,11 @@ final class PostReservationTest extends TestCase
     {
         // given
         $data = Reservation::factory()->make()->toArray();
+
+        $period = CarbonPeriod::create($data['date_from'], $data['date_to'])->toArray();
+        foreach ($period as $date) {
+            Vacant::factory()->create(['date' => $date->toDateString()]);
+        }
 
         // when
         $response = $this->postJson('/api/reservations', $data);

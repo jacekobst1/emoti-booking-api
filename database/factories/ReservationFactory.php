@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Modules\Reservation\Reservation;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,7 +24,7 @@ class ReservationFactory extends Factory
 
         return [
             'date_from' => $dateFrom,
-            'date_to' => $this->faker->date(max: $dateFrom),
+            'date_to' => Carbon::parse($dateFrom)->addDays(2)->toDateString(),
         ];
     }
 }

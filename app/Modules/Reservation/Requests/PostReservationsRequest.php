@@ -19,4 +19,17 @@ final class PostReservationsRequest extends Data
         public string $date_to,
     ) {
     }
+
+    /**
+     * @return list<non-empty-string>
+     */
+    public function getArrayOfDays(): array
+    {
+        $period = CarbonPeriod::create($this->date_from, $this->date_to)->toArray();
+
+        return array_map(
+            static fn($date): string => $date->toDateString(),
+            $period
+        );
+    }
 }

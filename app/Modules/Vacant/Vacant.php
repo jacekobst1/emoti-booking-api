@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * @mixin IdeHelperVacant
  */
-final class Vacant extends Model
+class Vacant extends Model
 {
     use HasUuids;
     use HasFactory;
@@ -42,5 +42,10 @@ final class Vacant extends Model
     public function reservations(): BelongsToMany
     {
         return $this->belongsToMany(Reservation::class);
+    }
+
+    public function bedsAreAvailable(): bool
+    {
+        return $this->number_of_beds - $this->reservations()->count() > 0;
     }
 }
