@@ -14,9 +14,13 @@ final class PostReservationTest extends TestCase
     public function testSuccess(): void
     {
         // given
-        $data = Reservation::factory()->make()->toArray();
+        $data = Reservation::factory()->make([
+            'date_from' => '2022-01-01',
+            'date_to' => '2022-01-03',
+        ])->toArray();
 
         $period = CarbonPeriod::create($data['date_from'], $data['date_to'])->toArray();
+        array_pop($period);
         foreach ($period as $date) {
             Vacant::factory()->create(['date' => $date->toDateString()]);
         }
@@ -27,7 +31,8 @@ final class PostReservationTest extends TestCase
         // then
         $response->assertSuccessful();
         $id = $response->json('data.id');
-        $this->assertDatabaseHas('reservations', ['id' => $id] + $data);
+        $reservation = Reservation::find($id);
+        $this->assertSame(2, $reservation->vacants()->count());
     }
 
     public function testErrorOnWrongPayload(): void
