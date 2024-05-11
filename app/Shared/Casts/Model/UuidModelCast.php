@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
+/**
+ * @implements CastsAttributes<?UuidInterface, string>
+ */
 class UuidModelCast implements CastsAttributes
 {
     /**
@@ -25,6 +28,7 @@ class UuidModelCast implements CastsAttributes
      * Prepare the given value for storage.
      *
      * @param array<string, mixed> $attributes
+     * @return non-empty-array<string, mixed>
      */
     public function set(Model $model, string $key, mixed $value, array $attributes): array
     {
