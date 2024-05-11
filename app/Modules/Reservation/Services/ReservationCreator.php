@@ -17,7 +17,8 @@ final readonly class ReservationCreator
 {
     public function __construct(
         private VacantRepository $vacantRepository,
-        private ReservationVerifier $verifier,
+        private ReservationVerifier $reservationVerifier,
+        private ReservationPriceCalculator $reservationPriceCalculator,
         private ReservationModelManager $reservationModelManager,
     ) {
     }
@@ -30,7 +31,7 @@ final readonly class ReservationCreator
         $reservationDays = $data->getArrayOfDays();
         $vacancies = $this->vacantRepository->getByDates($reservationDays);
 
-        $this->verifier->verifyReservationCanBeMade($vacancies, $reservationDays);
+        $this->reservationVerifier->verifyReservationCanBeMade($vacancies, $reservationDays);
 
         return $this->storeReservation($data, $vacancies);
     }
@@ -40,10 +41,15 @@ final readonly class ReservationCreator
      */
     private function storeReservation(PostReservationsRequest $data, Collection $vacancies): Reservation
     {
+        $price = $this->reservationPriceCalculator->calculatePrice($vacancies);
+
+        $reservation = new Reservation($data->toArray());
+        $reservation->total_price = $price;
+
         $vacanciesIds = $vacancies->pluck('id')->toArray();
 
-        return $this->reservationModelManager->createWithVacancies(
-            $data->toArray(),
+        return $this->reservationModelManager->saveWithVacancies(
+            $reservation,
             $vacanciesIds,
         );
     }

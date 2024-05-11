@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->date('date_from');
             $table->date('date_to');
+            $table->integer('total_price');
 //            $table->uuid('user_id')->index(); TODO
             $table->timestamps();
         });

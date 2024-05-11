@@ -25,6 +25,7 @@ class ReservationFactory extends Factory
         return [
             'date_from' => $dateFrom,
             'date_to' => Carbon::parse($dateFrom)->addDays(2)->toDateString(),
+            'total_price' => $this->faker->randomNumber(),
         ];
     }
 }

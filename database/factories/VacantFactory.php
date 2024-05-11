@@ -22,6 +22,7 @@ class VacantFactory extends Factory
         return [
             'date' => $this->faker->date(),
             'number_of_beds' => $this->faker->numberBetween(1, 10),
+            'price' => $this->faker->randomNumber(),
         ];
     }
 }

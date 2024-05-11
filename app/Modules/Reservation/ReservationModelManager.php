@@ -12,12 +12,11 @@ final readonly class ReservationModelManager
     }
 
     /**
-     * @param array<non-empty-string, mixed> $data
      * @param non-empty-list<non-empty-string> $vacanciesIds
      */
-    public function createWithVacancies(array $data, array $vacanciesIds): Reservation
+    public function saveWithVacancies(Reservation $reservation, array $vacanciesIds): Reservation
     {
-        $reservation = $this->model->create($data);
+        $reservation->save();
         $reservation->vacancies()->attach($vacanciesIds);
 
         return $reservation;

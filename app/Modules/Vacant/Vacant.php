@@ -27,6 +27,7 @@ class Vacant extends Model
     protected $fillable = [
         'date',
         'number_of_beds',
+        'price',
     ];
 
     protected $casts = [

@@ -21,8 +21,10 @@ final class PostReservationTest extends TestCase
 
         $period = CarbonPeriod::create($data['date_from'], $data['date_to'])->toArray();
         array_pop($period);
+        $totalPrice = 0;
         foreach ($period as $date) {
-            Vacant::factory()->create(['date' => $date->toDateString()]);
+            $vacant = Vacant::factory()->create(['date' => $date->toDateString()]);
+            $totalPrice += $vacant->price;
         }
 
         // when
@@ -33,6 +35,7 @@ final class PostReservationTest extends TestCase
         $id = $response->json('data.id');
         $reservation = Reservation::find($id);
         $this->assertSame(2, $reservation->vacancies()->count());
+        $this->assertSame($totalPrice, $reservation->total_price);
     }
 
     public function testErrorOnWrongPayload(): void

@@ -44,7 +44,7 @@ final class ReservationVerifier
     {
         foreach ($vacancies as $vacant) {
             if (!$vacant->bedsAreAvailable()) {
-                throw new ConflictException("Some dates don't has beds available");
+                throw new ConflictException('No beds available on some dates');
             }
         }
     }

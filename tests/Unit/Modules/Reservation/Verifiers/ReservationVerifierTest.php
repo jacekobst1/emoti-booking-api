@@ -82,7 +82,7 @@ final class ReservationVerifierTest extends TestCase
     {
         // then
         $this->expectException(ConflictException::class);
-        $this->expectExceptionMessage("Some dates don't has beds available");
+        $this->expectExceptionMessage('No beds available on some dates');
 
         // given
         $verifier = new ReservationVerifier();

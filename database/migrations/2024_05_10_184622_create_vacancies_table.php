@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
             $table->date('date')->unique();
             $table->integer('number_of_beds');
-//            $table->integer('price'); TODO
+            $table->integer('price');
             $table->timestamps();
         });
     }

@@ -50,6 +50,7 @@ namespace App\Modules\Reservation{
  * @property \Ramsey\Uuid\UuidInterface $id
  * @property string $date_from
  * @property string $date_to
+ * @property int $total_price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Vacant\Vacant> $vacancies
@@ -62,6 +63,7 @@ namespace App\Modules\Reservation{
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereDateFrom($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereDateTo($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereTotalPrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -76,6 +78,7 @@ namespace App\Modules\Vacant{
  * @property \Ramsey\Uuid\UuidInterface $id
  * @property string $date
  * @property int $number_of_beds
+ * @property int $price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Reservation\Reservation> $reservations
@@ -88,6 +91,7 @@ namespace App\Modules\Vacant{
  * @method static \Illuminate\Database\Eloquent\Builder|Vacant whereDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Vacant whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Vacant whereNumberOfBeds($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Vacant wherePrice($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Vacant whereUpdatedAt($value)
  * @mixin \Eloquent
  */
