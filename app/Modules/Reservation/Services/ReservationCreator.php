@@ -7,6 +7,7 @@ namespace App\Modules\Reservation\Services;
 use App\Http\Exceptions\ConflictException;
 use App\Modules\Reservation\Requests\PostReservationsRequest;
 use App\Modules\Reservation\Reservation;
+use App\Modules\Reservation\ReservationModelManager;
 use App\Modules\Reservation\Verifiers\ReservationVerifier;
 use App\Modules\Vacant\Vacant;
 use App\Modules\Vacant\VacantRepository;
@@ -16,7 +17,8 @@ final readonly class ReservationCreator
 {
     public function __construct(
         private VacantRepository $vacantRepository,
-        private ReservationVerifier $verifier
+        private ReservationVerifier $verifier,
+        private ReservationModelManager $reservationModelManager,
     ) {
     }
 
@@ -38,9 +40,11 @@ final readonly class ReservationCreator
      */
     private function storeReservation(PostReservationsRequest $data, Collection $vacancies): Reservation
     {
-        $reservation = Reservation::create($data->toArray());
-        $reservation->vacancies()->attach($vacancies->pluck('id')->toArray());
+        $vacanciesIds = $vacancies->pluck('id')->toArray();
 
-        return $reservation;
+        return $this->reservationModelManager->createWithVacancies(
+            $data->toArray(),
+            $vacanciesIds,
+        );
     }
 }
