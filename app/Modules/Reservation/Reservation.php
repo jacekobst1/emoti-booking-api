@@ -6,6 +6,7 @@ namespace App\Modules\Reservation;
 
 use App\Modules\Vacant\Vacant;
 use App\Shared\Casts\Model\UuidModelCast;
+use Carbon\Carbon;
 use Database\Factories\ReservationFactory;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -42,5 +43,10 @@ final class Reservation extends Model
     public function vacancies(): BelongsToMany
     {
         return $this->belongsToMany(Vacant::class);
+    }
+
+    public function getNumberOfNights(): float
+    {
+        return (int)Carbon::parse($this->date_from)->diffInDays($this->date_to);
     }
 }
