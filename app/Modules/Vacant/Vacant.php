@@ -6,6 +6,7 @@ namespace App\Modules\Vacant;
 
 use App\Modules\Reservation\Reservation;
 use App\Shared\Casts\Model\UuidModelCast;
+use Database\Factories\VacantFactory;
 use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -29,6 +30,11 @@ final class Vacant extends Model
     protected $casts = [
         'id' => UuidModelCast::class,
     ];
+
+    protected static function newFactory(): VacantFactory
+    {
+        return VacantFactory::new();
+    }
 
     /**
      * @return BelongsToMany<Reservation>
