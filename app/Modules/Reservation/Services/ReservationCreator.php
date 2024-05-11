@@ -9,12 +9,15 @@ use App\Modules\Reservation\Requests\PostReservationsRequest;
 use App\Modules\Reservation\Reservation;
 use App\Modules\Reservation\Verifiers\ReservationVerifier;
 use App\Modules\Vacant\Vacant;
+use App\Modules\Vacant\VacantRepository;
 use Illuminate\Support\Collection;
 
 final readonly class ReservationCreator
 {
-    public function __construct(private ReservationVerifier $verifier)
-    {
+    public function __construct(
+        private VacantRepository $vacantRepository,
+        private ReservationVerifier $verifier
+    ) {
     }
 
     /**
@@ -23,7 +26,7 @@ final readonly class ReservationCreator
     public function handle(PostReservationsRequest $data): Reservation
     {
         $reservationDays = $data->getArrayOfDays();
-        $vacancies = Vacant::whereIn('date', $reservationDays)->get();
+        $vacancies = $this->vacantRepository->getByDates($reservationDays);
 
         $this->verifier->verifyReservationCanBeMade($vacancies, $reservationDays);
 
