@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\UserController;
 use App\Modules\Auth\Enums\RoleEnum;
-use App\Modules\Reservation\ReservationController;
+use App\Modules\Reservation\Application\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 $admin = RoleEnum::Admin->value;

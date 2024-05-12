@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Modules\Reservation\Services;
 
-use App\Modules\Reservation\Services\ReservationPriceCalculator;
+use App\Modules\OldReservation\Services\ReservationPriceCalculator;
 use Illuminate\Support\Collection;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;

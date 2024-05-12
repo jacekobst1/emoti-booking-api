@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Unit\Modules\Reservation\Verifiers;
 
 use App\Http\Exceptions\ConflictException;
-use App\Modules\Reservation\Verifiers\ReservationVerifier;
-use App\Modules\Vacant\Vacant;
+use App\Modules\OldAsset\Asset;
+use App\Modules\OldReservation\Verifiers\ReservationVerifier;
 use PHPUnit\Framework\MockObject\Exception;
 use PHPUnit\Framework\TestCase;
 
@@ -21,17 +21,17 @@ final class ReservationVerifierTest extends TestCase
         // given
         $verifier = new ReservationVerifier();
 
-        $vacant1 = $this->createMock(Vacant::class);
+        $vacant1 = $this->createMock(Asset::class);
         $vacant1->expects($this->once())
             ->method('bedsAreAvailable')
             ->willReturn(true);
 
-        $vacant2 = $this->createMock(Vacant::class);
+        $vacant2 = $this->createMock(Asset::class);
         $vacant2->expects($this->once())
             ->method('bedsAreAvailable')
             ->willReturn(true);
 
-        $vacant3 = $this->createMock(Vacant::class);
+        $vacant3 = $this->createMock(Asset::class);
         $vacant3->expects($this->once())
             ->method('bedsAreAvailable')
             ->willReturn(true);
@@ -62,8 +62,8 @@ final class ReservationVerifierTest extends TestCase
         // given
         $verifier = new ReservationVerifier();
 
-        $vacant1 = $this->createMock(Vacant::class);
-        $vacant2 = $this->createMock(Vacant::class);
+        $vacant1 = $this->createMock(Asset::class);
+        $vacant2 = $this->createMock(Asset::class);
 
         $vacancies = collect([
             $vacant1,
@@ -87,17 +87,17 @@ final class ReservationVerifierTest extends TestCase
         // given
         $verifier = new ReservationVerifier();
 
-        $vacant1 = $this->createMock(Vacant::class);
+        $vacant1 = $this->createMock(Asset::class);
         $vacant1->expects($this->once())
             ->method('bedsAreAvailable')
             ->willReturn(true);
 
-        $vacant2 = $this->createMock(Vacant::class);
+        $vacant2 = $this->createMock(Asset::class);
         $vacant2->expects($this->once())
             ->method('bedsAreAvailable')
             ->willReturn(true);
 
-        $vacant3 = $this->createMock(Vacant::class);
+        $vacant3 = $this->createMock(Asset::class);
         $vacant3->expects($this->once())
             ->method('bedsAreAvailable')
             ->willReturn(false);

@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use App\Modules\Reservation\Reservation;
+use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\User\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
