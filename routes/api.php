@@ -30,8 +30,6 @@ Route::middleware(['auth:sanctum', "role:$user"])->group(function () {
 
 // Unguarded routes
 Route::prefix('/unguarded')->group(function () {
-    Route::prefix('/reservations')->group(function () {
-        Route::get('/', [ReservationController::class, 'getReservationsList']);
-        Route::post('/', [ReservationController::class, 'postReservation']);
-    });
+    Route::get('/admin/reservations', [ReservationController::class, 'getAdminReservationsList']);
+    Route::post('/reservations', [ReservationController::class, 'postReservation']);
 });
