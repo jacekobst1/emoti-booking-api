@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Slot\Domain\Contracts\DataTransferObjects;
+namespace App\Modules\Slot\Domain\Services;
 
+use App\Modules\Slot\Domain\Contracts\DataTransferObjects\SlotDtoCollection;
 use App\Modules\Slot\Domain\Contracts\SlotGetterInterface;
 use App\Modules\Slot\Domain\Contracts\SlotRepositoryInterface;
 
@@ -13,9 +14,9 @@ final readonly class SlotGetter implements SlotGetterInterface
     {
     }
 
-    public function getSlotsByDates(array $dates): SlotDtoCollection
+    public function getFreeSlotsByDates(array $dates): SlotDtoCollection
     {
-        $slots = $this->slotRepository->getSlotsByDates($dates);
+        $slots = $this->slotRepository->getFreeSlotsByDates($dates);
 
         return SlotDtoCollection::fromModelsCollection($slots);
     }

@@ -18,11 +18,12 @@ final readonly class SlotRepository implements SlotRepositoryInterface
      * @param non-empty-list<non-empty-string> $dates
      * @return Collection<int, Slot>
      */
-    public function getSlotsByDates(array $dates): Collection
+    public function getFreeSlotsByDates(array $dates): Collection
     {
         return $this->model
             ->select('id', 'asset_id', 'date', 'price')
             ->whereIn('date', $dates)
+            ->whereNull('reservation_id')
             ->get();
     }
 }

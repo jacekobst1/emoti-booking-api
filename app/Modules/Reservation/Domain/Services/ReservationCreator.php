@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Modules\Reservation\Domain\Services;
 
+use App\Http\Exceptions\ConflictException;
 use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
 use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\Slot\Domain\Contracts\DataTransferObjects\SlotDtoCollection;
 use App\Modules\Slot\Domain\Contracts\SlotGetterInterface;
+use App\Modules\Slot\Domain\Contracts\SlotReserverInterface;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use Exception;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -19,6 +19,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
 {
     public function __construct(
         private SlotGetterInterface $slotGetter,
+        private SlotReserverInterface $slotReserver,
     ) {
     }
 
@@ -28,43 +29,16 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
      *     date_to: string,
      * } $data
      *
-     * @throws Throwable
+     * @throws Throwable|ConflictException
      */
     public function handle(array $data): Reservation
     {
         $dates = $this->getArrayOfDays($data['date_from'], $data['date_to']);
+        $slots = $this->getMatchingFreeSlots($dates);
 
-        /** @var Collection<string, SlotDtoCollection> $groupedSlots */
-        $groupedSlots = $this->slotGetter->getSlotsByDates($dates)->groupByAssetId();
-
-        /**@var ?SlotDtoCollection $selectedSlots */
-        $selectedSlots = null;
-
-        foreach ($groupedSlots as $assetId => $slots) {
-            if ($slots->count() === count($dates)) {
-                $selectedSlots = $slots;
-                break;
-            }
-        }
-
-        if (!$selectedSlots) {
-            throw new Exception('No asset available for given dates');
-        }
-
-        return DB::transaction(function () use ($selectedSlots, $data) {
-            $reservation = Reservation::make([
-                'date_from' => $data['date_from'],
-                'date_to' => $data['date_to'],
-            ]);
-            $reservation->user_id = auth()->id();
-            $reservation->asset_id = $selectedSlots->first()->assetId;
-            $reservation->total_price = $selectedSlots->getTotalPrice();
-            $reservation->save();
-
-            // $this->reserveSlots($reservation->id, $selectedSlots->getIds());
-//        foreach ($selectedSlots as $slot) {
-//            $slot->reservation()->associate($reservation->id);
-//        }
+        return DB::transaction(function () use ($data, $slots) {
+            $reservation = $this->createModel($data, $slots);
+            $this->slotReserver->reserveSlots($reservation->id, $slots->getIds());
 
             return $reservation;
         });
@@ -91,5 +65,48 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
             static fn(Carbon $date): string => $date->toDateString(),
             $period
         );
+    }
+
+    /**
+     * @param non-empty-list<non-empty-string> $dates
+     *
+     * @throws ConflictException
+     */
+    private function getMatchingFreeSlots(array $dates): SlotDtoCollection
+    {
+        $freeSlots = $this->slotGetter->getFreeSlotsByDates($dates);
+
+        /**@var ?SlotDtoCollection $selectedSlots */
+        $matchingFreeSlots = $freeSlots->groupByAssetId()->first(
+            static fn(SlotDtoCollection $slots): bool => $slots->count() === count($dates)
+        );
+
+        if (!$matchingFreeSlots) {
+            throw new ConflictException('No asset available for given dates');
+        }
+
+        return $matchingFreeSlots;
+    }
+
+    /**
+     * @param array{
+     *     date_from: string,
+     *     date_to: string,
+     * } $data
+     */
+    private function createModel(array $data, SlotDtoCollection $slots): Reservation
+    {
+        $reservation = Reservation::make([
+            'date_from' => $data['date_from'],
+            'date_to' => $data['date_to'],
+        ]);
+
+        $reservation->user_id = auth()->id();
+        $reservation->asset_id = $slots->first()->assetId;
+        $reservation->total_price = $slots->getTotalPrice();
+
+        $reservation->save();
+
+        return $reservation;
     }
 }

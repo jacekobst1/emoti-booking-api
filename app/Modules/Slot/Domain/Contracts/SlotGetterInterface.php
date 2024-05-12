@@ -12,5 +12,5 @@ interface SlotGetterInterface
     /**
      * @param list<Carbon> $dates
      */
-    public function getSlotsByDates(array $dates): SlotDtoCollection;
+    public function getFreeSlotsByDates(array $dates): SlotDtoCollection;
 }
