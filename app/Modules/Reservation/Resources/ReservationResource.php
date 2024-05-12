@@ -24,8 +24,8 @@ class ReservationResource extends JsonResource
             'date_to' => $this->date_to,
             'total_price' => $this->total_price,
             'number_of_nights' => $this->getNumberOfNights(),
-            'created_at' => $this->created_at->toDateString(),
-            'updated_at' => $this->updated_at->toDateString(),
+            'created_at' => $this->created_at?->toDateString(),
+            'updated_at' => $this->updated_at?->toDateString(),
         ];
     }
 }

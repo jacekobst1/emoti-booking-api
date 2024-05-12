@@ -6,11 +6,6 @@ namespace App\Modules\Reservation;
 
 final readonly class ReservationModelManager
 {
-    public function __construct(
-        private Reservation $model
-    ) {
-    }
-
     /**
      * @param non-empty-list<non-empty-string> $vacanciesIds
      */

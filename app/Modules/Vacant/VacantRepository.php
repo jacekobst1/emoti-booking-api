@@ -12,6 +12,11 @@ final readonly class VacantRepository
     {
     }
 
+    /**
+     * @param non-empty-list<non-empty-string> $dates
+     *
+     * @return Collection<int, Vacant>
+     */
     public function getByDates(array $dates): Collection
     {
         return $this->model->whereIn('date', $dates)->get();

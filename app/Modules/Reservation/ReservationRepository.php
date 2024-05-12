@@ -12,6 +12,9 @@ final readonly class ReservationRepository
     {
     }
 
+    /**
+     * @return LengthAwarePaginator<Reservation>
+     */
     public function paginate(): LengthAwarePaginator
     {
         return $this->model->paginate();

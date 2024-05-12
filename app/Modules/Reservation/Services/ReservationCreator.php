@@ -46,6 +46,7 @@ final readonly class ReservationCreator
         $reservation = new Reservation($data->toArray());
         $reservation->total_price = $price;
 
+        /** @var non-empty-list<non-empty-string> $vacanciesIds */
         $vacanciesIds = $vacancies->pluck('id')->toArray();
 
         return $this->reservationModelManager->saveWithVacancies(
