@@ -25,8 +25,8 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
 
     /**
      * @param array{
-     *     date_from: string,
-     *     date_to: string,
+     *     date_from: non-empty-string,
+     *     date_to: non-empty-string,
      * } $data
      *
      * @throws Throwable|ConflictException
@@ -90,8 +90,8 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
 
     /**
      * @param array{
-     *     date_from: string,
-     *     date_to: string,
+     *     date_from: non-empty-string,
+     *     date_to: non-empty-string,
      * } $data
      */
     private function createModel(array $data, SlotDtoCollection $slots): Reservation
