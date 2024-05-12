@@ -15,8 +15,11 @@ final readonly class ReservationRepository
     /**
      * @return LengthAwarePaginator<Reservation>
      */
-    public function paginate(): LengthAwarePaginator
+    public function sortByDatesAndPaginate(): LengthAwarePaginator
     {
-        return $this->model->paginate();
+        return $this->model
+            ->orderBy('date_from')
+            ->orderBy('date_to')
+            ->paginate();
     }
 }
