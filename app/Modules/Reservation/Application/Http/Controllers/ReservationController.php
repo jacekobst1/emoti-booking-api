@@ -7,7 +7,7 @@ namespace App\Modules\Reservation\Application\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Exceptions\ConflictException;
 use App\Modules\Reservation\Application\Http\Requests\PostReservationRequest;
-use App\Modules\Reservation\Domain\Interfaces\ReservationCreatorInterface;
+use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
 use App\Shared\Response\JsonResp;
 use Illuminate\Http\JsonResponse;
 

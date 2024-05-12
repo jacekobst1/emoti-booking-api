@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Reservation\Domain\Interfaces;
+namespace App\Modules\Reservation\Domain\Contracts;
 
 use App\Modules\Reservation\Domain\Models\Reservation;
 

@@ -194,8 +194,8 @@ namespace App\Modules\Reservation\Domain\Models{
  * 
  *
  * @property \Ramsey\Uuid\UuidInterface $id
- * @property string $user_id
- * @property string $asset_id
+ * @property \Ramsey\Uuid\UuidInterface $user_id
+ * @property \Ramsey\Uuid\UuidInterface $asset_id
  * @property string $date_from
  * @property string $date_to
  * @property int $total_price
@@ -228,9 +228,9 @@ namespace App\Modules\Slot\Domain\Models{
  * 
  *
  * @property \Ramsey\Uuid\UuidInterface $id
- * @property string $asset_id
+ * @property \Ramsey\Uuid\UuidInterface $asset_id
  * @property string|null $reservation_id
- * @property string $date
+ * @property \Illuminate\Support\Carbon $date
  * @property int $price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

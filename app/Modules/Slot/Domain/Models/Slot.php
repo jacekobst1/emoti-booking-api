@@ -30,6 +30,8 @@ class Slot extends Model
 
     protected $casts = [
         'id' => UuidModelCast::class,
+        'asset_id' => UuidModelCast::class,
+        'date' => 'date',
     ];
 
     protected static function newFactory(): SlotFactory

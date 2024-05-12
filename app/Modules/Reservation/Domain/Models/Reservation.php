@@ -34,6 +34,8 @@ final class Reservation extends Model
 
     protected $casts = [
         'id' => UuidModelCast::class,
+        'user_id' => UuidModelCast::class,
+        'asset_id' => UuidModelCast::class,
     ];
 
     protected static function newFactory(): ReservationFactory
