@@ -18,7 +18,7 @@ class VacantSeeder extends Seeder
         Vacant::factory()->create(['date' => '2024-06-04', 'number_of_beds' => 5, 'price' => 3000]);
         Vacant::factory()->create(['date' => '2024-06-05', 'number_of_beds' => 5, 'price' => 3000]);
 
-        Vacant::factory()->create(['date' => '2024-06-06', 'number_of_beds' => 1, 'price' => 0]);
+        Vacant::factory()->create(['date' => '2024-06-06', 'number_of_beds' => 1, 'price' => 1900]);
 
         Vacant::factory()->create(['date' => '2024-06-07', 'number_of_beds' => 5, 'price' => 3000]);
 
