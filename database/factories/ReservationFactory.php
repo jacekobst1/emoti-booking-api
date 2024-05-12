@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Modules\Asset\Domain\Models\Asset;
 use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\User\User;
 use Carbon\Carbon;
@@ -30,6 +31,7 @@ class ReservationFactory extends Factory
             'date_to' => Carbon::parse($dateFrom)->addDays(2)->toDateString(),
             'total_price' => $this->faker->randomNumber(),
             'user_id' => User::factory(),
+            'asset_id' => Asset::factory(),
         ];
     }
 }

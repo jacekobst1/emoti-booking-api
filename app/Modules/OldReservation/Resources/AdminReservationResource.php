@@ -21,6 +21,7 @@ class AdminReservationResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'asset_id' => $this->asset_id,
             'date_from' => $this->date_from,
             'date_to' => $this->date_to,
             'total_price' => $this->total_price,

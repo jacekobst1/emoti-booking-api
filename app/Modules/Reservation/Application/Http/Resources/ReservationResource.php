@@ -22,6 +22,7 @@ class ReservationResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'asset_id' => $this->asset_id,
             'date_from' => $this->date_from,
             'date_to' => $this->date_to,
             'total_price' => $this->total_price,

@@ -6,29 +6,35 @@ namespace App\Modules\Reservation\Application\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Exceptions\ConflictException;
+use App\Modules\OldReservation\Resources\AdminReservationResource;
 use App\Modules\Reservation\Application\Http\Requests\PostReservationRequest;
+use App\Modules\Reservation\Application\Http\Resources\ReservationResource;
 use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
+use App\Modules\Reservation\Domain\Contracts\ReservationGetterInterface;
+use App\Modules\User\User;
 use App\Shared\Response\JsonResp;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Throwable;
 
 final class ReservationController extends Controller
 {
-//    public function getAdminReservationsList(ReservationRepository $reservationRepository): AnonymousResourceCollection
-//    {
-//        $reservations = $reservationRepository->paginateAdminReservations();
-//
-//        return AdminReservationResource::collection($reservations);
-//    }
-//
-//    public function getUserReservationsList(ReservationRepository $reservationRepository): AnonymousResourceCollection
-//    {
-//        /** @var User $user */
-//        $user = auth()->user();
-//
-//        $reservations = $reservationRepository->paginateUserReservations($user->id);
-//
-//        return ReservationResource::collection($reservations);
-//    }
+    public function getAdminReservationsList(ReservationGetterInterface $getter): AnonymousResourceCollection
+    {
+        $reservations = $getter->paginateAdminReservations();
+
+        return AdminReservationResource::collection($reservations);
+    }
+
+    public function getUserReservationsList(ReservationGetterInterface $getter): AnonymousResourceCollection
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $reservations = $getter->paginateUserReservations($user->id);
+
+        return ReservationResource::collection($reservations);
+    }
 
     /**
      * @throws Throwable|ConflictException
