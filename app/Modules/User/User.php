@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @mixin IdeHelperUser
@@ -21,6 +22,7 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
     use HasApiTokens;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.

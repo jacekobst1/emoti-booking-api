@@ -20,4 +20,14 @@ trait SanctumTrait
         Sanctum::actingAs($user);
         $this->loggedUser = $user;
     }
+
+    private function actAsAdmin(): void
+    {
+        $this->seed();
+
+        $admin = User::whereEmail('admin@gmail.com')->first();
+
+        Sanctum::actingAs($admin);
+        $this->loggedUser = $admin;
+    }
 }

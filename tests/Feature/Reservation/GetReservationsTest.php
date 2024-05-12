@@ -16,7 +16,7 @@ final class GetReservationsTest extends TestCase
     {
         parent::setUp();
 
-        $this->actAsUser();
+        $this->actAsAdmin();
     }
 
     public function testSuccess(): void
