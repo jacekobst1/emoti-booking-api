@@ -16,16 +16,24 @@ final readonly class ReservationRepository
     /**
      * @return LengthAwarePaginator<Reservation>
      */
-    public function sortByDatesAndPaginateByUser(?UuidInterface $userId = null): LengthAwarePaginator
+    public function paginateUserReservations(UuidInterface $userId): LengthAwarePaginator
     {
-        $query = $this->model
+        return $this->model
+            ->where('user_id', $userId->toString())
             ->orderBy('date_from')
-            ->orderBy('date_to');
+            ->orderBy('date_to')
+            ->paginate();
+    }
 
-        if ($userId !== null) {
-            $query->where('user_id', $userId->toString());
-        }
-
-        return $query->paginate();
+    /**
+     * @return LengthAwarePaginator<Reservation>
+     */
+    public function paginateAdminReservations(): LengthAwarePaginator
+    {
+        return $this->model
+            ->with('user')
+            ->orderBy('date_from')
+            ->orderBy('date_to')
+            ->paginate();
     }
 }

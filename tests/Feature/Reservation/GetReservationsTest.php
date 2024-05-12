@@ -16,13 +16,15 @@ final class GetReservationsTest extends TestCase
     {
         parent::setUp();
 
-        $this->actAsAdmin();
+        $this->actAsUser();
     }
 
     public function testSuccess(): void
     {
         // given
-        Reservation::factory()->create();
+        Reservation::factory()->create([
+            'user_id' => $this->loggedUser->id->toString()
+        ]);
 
         // when
         $response = $this->getJson('/api/reservations');
@@ -47,22 +49,27 @@ final class GetReservationsTest extends TestCase
     {
         // given
         $reservation4 = Reservation::factory()->create([
+            'user_id' => $this->loggedUser->id->toString(),
             'date_from' => '2020-01-02',
             'date_to' => '2020-01-04',
         ]);
         $reservation2 = Reservation::factory()->create([
+            'user_id' => $this->loggedUser->id->toString(),
             'date_from' => '2020-01-01',
             'date_to' => '2020-01-03',
         ]);
         $reservation5 = Reservation::factory()->create([
+            'user_id' => $this->loggedUser->id->toString(),
             'date_from' => '2020-01-02',
             'date_to' => '2020-01-05',
         ]);
         $reservation3 = Reservation::factory()->create([
+            'user_id' => $this->loggedUser->id->toString(),
             'date_from' => '2020-01-01',
             'date_to' => '2020-01-04',
         ]);
         $reservation1 = Reservation::factory()->create([
+            'user_id' => $this->loggedUser->id->toString(),
             'date_from' => '2020-01-01',
             'date_to' => '2020-01-02',
         ]);

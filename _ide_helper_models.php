@@ -107,7 +107,7 @@ namespace App\Modules\User{
 /**
  * 
  *
- * @property string $id
+ * @property \Ramsey\Uuid\UuidInterface $id
  * @property string $name
  * @property string $email
  * @property \Illuminate\Support\Carbon|null $email_verified_at

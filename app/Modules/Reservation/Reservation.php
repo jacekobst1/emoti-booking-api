@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Modules\Reservation;
 
+use App\Modules\User\User;
 use App\Modules\Vacant\Vacant;
 use App\Shared\Casts\Model\UuidModelCast;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
@@ -35,6 +37,14 @@ final class Reservation extends Model
     protected static function newFactory(): ReservationFactory
     {
         return ReservationFactory::new();
+    }
+
+    /**
+     * @return BelongsTo<User>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**

@@ -6,8 +6,8 @@ namespace App\Modules\Reservation;
 
 use App\Http\Controllers\Controller;
 use App\Http\Exceptions\ConflictException;
-use App\Modules\Auth\Enums\RoleEnum;
 use App\Modules\Reservation\Requests\PostReservationsRequest;
+use App\Modules\Reservation\Resources\AdminReservationResource;
 use App\Modules\Reservation\Resources\ReservationResource;
 use App\Modules\Reservation\Services\ReservationCreator;
 use App\Modules\User\User;
@@ -17,13 +17,19 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 final class ReservationController extends Controller
 {
-    public function getReservationsList(ReservationRepository $reservationRepository): AnonymousResourceCollection
+    public function getAdminReservationsList(ReservationRepository $reservationRepository): AnonymousResourceCollection
+    {
+        $reservations = $reservationRepository->paginateAdminReservations();
+
+        return AdminReservationResource::collection($reservations);
+    }
+
+    public function getUserReservationsList(ReservationRepository $reservationRepository): AnonymousResourceCollection
     {
         /** @var User $user */
         $user = auth()->user();
-        $isAdmin = $user->hasRole(RoleEnum::Admin->value);
 
-        $reservations = $reservationRepository->sortByDatesAndPaginateByUser($isAdmin ? null : $user->id);
+        $reservations = $reservationRepository->paginateUserReservations($user->id);
 
         return ReservationResource::collection($reservations);
     }
