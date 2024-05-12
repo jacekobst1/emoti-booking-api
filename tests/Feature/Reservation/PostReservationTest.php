@@ -7,10 +7,20 @@ namespace Tests\Feature\Reservation;
 use App\Modules\Reservation\Reservation;
 use App\Modules\Vacant\Vacant;
 use Carbon\CarbonPeriod;
+use Tests\Helpers\SanctumTrait;
 use Tests\TestCase;
 
 final class PostReservationTest extends TestCase
 {
+    use SanctumTrait;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->actAsUser();
+    }
+    
     public function testSuccess(): void
     {
         // given
