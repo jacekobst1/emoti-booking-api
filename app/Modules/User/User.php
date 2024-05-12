@@ -6,6 +6,8 @@ namespace App\Modules\User;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\IdeHelperUser;
+use App\Shared\Casts\Model\UuidModelCast;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -53,8 +55,14 @@ class User extends Authenticatable
     protected function casts(): array
     {
         return [
+            'id' => UuidModelCast::class,
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    protected static function newFactory(): UserFactory
+    {
+        return UserFactory::new();
     }
 }

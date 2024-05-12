@@ -20,7 +20,7 @@ final class PostReservationTest extends TestCase
 
         $this->actAsUser();
     }
-    
+
     public function testSuccess(): void
     {
         // given

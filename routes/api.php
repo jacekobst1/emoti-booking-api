@@ -7,14 +7,17 @@ use App\Modules\Auth\Enums\RoleEnum;
 use App\Modules\Reservation\ReservationController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:sanctum')->group(function () {
+$admin = RoleEnum::Admin->value;
+$user = RoleEnum::User->value;
+
+Route::middleware('auth:sanctum')->group(function () use ($admin, $user) {
     Route::get('/logged-user', [UserController::class, 'getLoggedUser']);
 
-    Route::prefix('/reservations')->group(function () {
-        Route::group(['middleware' => ['role:' . RoleEnum::Admin->value]], function () {
+    Route::prefix('/reservations')->group(function () use ($admin, $user) {
+        Route::group(['middleware' => ["role:$admin|$user"]], function () {
             Route::get('/', [ReservationController::class, 'getReservationsList']);
         });
-        Route::group(['middleware' => ['role:' . RoleEnum::User->value]], function () {
+        Route::group(['middleware' => ["role:$user"]], function () {
             Route::post('/', [ReservationController::class, 'postReservation']);
         });
     });

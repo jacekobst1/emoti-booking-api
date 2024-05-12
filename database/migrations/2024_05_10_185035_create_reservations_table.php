@@ -17,8 +17,13 @@ return new class extends Migration {
             $table->date('date_from');
             $table->date('date_to');
             $table->integer('total_price');
-//            $table->uuid('user_id')->index(); TODO
+            $table->uuid('user_id')->index();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

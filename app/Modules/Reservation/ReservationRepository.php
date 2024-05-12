@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Reservation;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Ramsey\Uuid\UuidInterface;
 
 final readonly class ReservationRepository
 {
@@ -15,11 +16,16 @@ final readonly class ReservationRepository
     /**
      * @return LengthAwarePaginator<Reservation>
      */
-    public function sortByDatesAndPaginate(): LengthAwarePaginator
+    public function sortByDatesAndPaginateByUser(?UuidInterface $userId = null): LengthAwarePaginator
     {
-        return $this->model
+        $query = $this->model
             ->orderBy('date_from')
-            ->orderBy('date_to')
-            ->paginate();
+            ->orderBy('date_to');
+
+        if ($userId !== null) {
+            $query->where('user_id', $userId->toString());
+        }
+
+        return $query->paginate();
     }
 }
