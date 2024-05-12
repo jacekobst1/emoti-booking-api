@@ -34,6 +34,7 @@ final class GetAdminReservationsTest extends TestCase
             'data' => [
                 '*' => [
                     'id',
+                    'user_id',
                     'date_from',
                     'date_to',
                     'created_at',

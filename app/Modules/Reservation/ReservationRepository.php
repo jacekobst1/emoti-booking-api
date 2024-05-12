@@ -31,7 +31,6 @@ final readonly class ReservationRepository
     public function paginateAdminReservations(): LengthAwarePaginator
     {
         return $this->model
-            ->with('user')
             ->orderBy('date_from')
             ->orderBy('date_to')
             ->paginate();
