@@ -31,7 +31,7 @@ final class ReservationController extends Controller
 //    }
 
     /**
-     * @throws ConflictException
+     * @throws Throwable|ConflictException
      */
     public function postReservation(
         PostReservationRequest $request,

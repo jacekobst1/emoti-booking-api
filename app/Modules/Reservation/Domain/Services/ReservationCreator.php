@@ -6,6 +6,7 @@ namespace App\Modules\Reservation\Domain\Services;
 
 use App\Http\Exceptions\ConflictException;
 use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
+use App\Modules\Reservation\Domain\Contracts\ReservationModelManagerInterface;
 use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\Slot\Domain\Contracts\DataTransferObjects\SlotDtoCollection;
 use App\Modules\Slot\Domain\Contracts\SlotGetterInterface;
@@ -19,6 +20,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
 {
     public function __construct(
         private SlotGetterInterface $slotGetter,
+        private ReservationModelManagerInterface $reservationModelManager,
         private SlotReserverInterface $slotReserver,
     ) {
     }
@@ -96,7 +98,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
      */
     private function createModel(array $data, SlotDtoCollection $slots): Reservation
     {
-        $reservation = Reservation::make([
+        $reservation = new Reservation([
             'date_from' => $data['date_from'],
             'date_to' => $data['date_to'],
         ]);
@@ -105,7 +107,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
         $reservation->asset_id = $slots->first()->assetId;
         $reservation->total_price = $slots->getTotalPrice();
 
-        $reservation->save();
+        $this->reservationModelManager->save($reservation);
 
         return $reservation;
     }
