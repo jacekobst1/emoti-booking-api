@@ -11,3 +11,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [ReservationController::class, 'postReservation']);
     });
 });
+
+Route::prefix('/unguarded')->group(function () {
+    Route::prefix('/reservations')->group(function () {
+        Route::get('/', [ReservationController::class, 'getReservationsList']);
+        Route::post('/', [ReservationController::class, 'postReservation']);
+    });
+});
