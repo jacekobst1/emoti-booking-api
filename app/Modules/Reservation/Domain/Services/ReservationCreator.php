@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Modules\Reservation\Domain\Services;
 
 use App\Http\Exceptions\ConflictException;
+use App\Modules\Auth\Domain\Models\User;
 use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationModelManagerInterface;
 use App\Modules\Reservation\Domain\Models\Reservation;
@@ -78,7 +79,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
     {
         $freeSlots = $this->slotGetter->getFreeSlotsByDates($dates);
 
-        /**@var ?SlotDtoCollection $selectedSlots */
+        /**@var ?SlotDtoCollection $matchingFreeSlots */
         $matchingFreeSlots = $freeSlots->groupByAssetId()->first(
             static fn(SlotDtoCollection $slots): bool => $slots->count() === count($dates)
         );
@@ -103,7 +104,9 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
             'date_to' => $data['date_to'],
         ]);
 
-        $reservation->user_id = auth()->id();
+        // just for the purpose of making frontend work without authentication
+        $reservation->user_id = auth()->id() ?? User::whereEmail('user@gmail.com')->first()->id;
+
         $reservation->asset_id = $slots->first()->assetId;
         $reservation->total_price = $slots->getTotalPrice();
 
