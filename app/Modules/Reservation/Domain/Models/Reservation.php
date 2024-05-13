@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Reservation\Domain\Models;
 
-use App\Modules\OldAsset\Asset;
-use App\Modules\OldReservation\IdeHelperReservation;
-use App\Modules\OldSlot\Slot;
+use App\Modules\Asset\Domain\Models\Asset;
+use App\Modules\Slot\Domain\Models\Slot;
 use App\Modules\User\User;
 use App\Shared\Casts\Model\UuidModelCast;
 use Carbon\Carbon;

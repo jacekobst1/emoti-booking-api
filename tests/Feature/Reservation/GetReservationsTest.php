@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Reservation;
 
-use App\Modules\OldReservation\Reservation;
+use App\Modules\Reservation\Domain\Models\Reservation;
 use Tests\Helpers\SanctumTrait;
 use Tests\TestCase;
 

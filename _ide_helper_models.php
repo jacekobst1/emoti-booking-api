@@ -99,96 +99,6 @@ namespace App\Modules\Auth\Models{
 	class IdeHelperRole {}
 }
 
-namespace App\Modules\OldAsset{
-/**
- * 
- *
- * @property \Ramsey\Uuid\UuidInterface $id
- * @property string $name
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Reservation\Domain\Models\Reservation> $reservations
- * @property-read int|null $reservations_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Slot\Domain\Models\Slot> $slots
- * @property-read int|null $slots_count
- * @method static \Database\Factories\AssetFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Asset newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Asset newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Asset query()
- * @method static \Illuminate\Database\Eloquent\Builder|Asset whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Asset whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Asset whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Asset whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-	#[\AllowDynamicProperties]
-	class IdeHelperAsset {}
-}
-
-namespace App\Modules\OldReservation{
-/**
- * 
- *
- * @property \Ramsey\Uuid\UuidInterface $id
- * @property string $user_id
- * @property string $asset_id
- * @property string $date_from
- * @property string $date_to
- * @property int $total_price
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Modules\OldAsset\Asset $asset
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\OldSlot\Slot> $slots
- * @property-read int|null $slots_count
- * @property-read \App\Modules\User\User $user
- * @method static \Database\Factories\ReservationFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation query()
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereAssetId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereDateFrom($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereDateTo($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereTotalPrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereUserId($value)
- * @mixin \Eloquent
- */
-	#[\AllowDynamicProperties]
-	final class IdeHelperReservation {}
-}
-
-namespace App\Modules\OldSlot{
-/**
- * 
- *
- * @property \Ramsey\Uuid\UuidInterface $id
- * @property string $asset_id
- * @property string|null $reservation_id
- * @property string $date
- * @property int $price
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Modules\OldAsset\Asset $asset
- * @property-read \App\Modules\OldReservation\Reservation|null $reservation
- * @method static \Database\Factories\AssetFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Slot newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Slot newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Slot query()
- * @method static \Illuminate\Database\Eloquent\Builder|Slot whereAssetId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Slot whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Slot whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Slot whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Slot wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Slot whereReservationId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Slot whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-	#[\AllowDynamicProperties]
-	class IdeHelperSlot {}
-}
-
 namespace App\Modules\Reservation\Domain\Models{
 /**
  * 
@@ -201,9 +111,6 @@ namespace App\Modules\Reservation\Domain\Models{
  * @property int $total_price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Modules\OldAsset\Asset $asset
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\OldSlot\Slot> $slots
- * @property-read int|null $slots_count
  * @property-read \App\Modules\User\User $user
  * @method static \Database\Factories\ReservationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation newModelQuery()

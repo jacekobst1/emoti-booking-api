@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
-use App\Modules\OldAsset\Asset;
+use App\Modules\Asset\Domain\Models\Asset;
 use App\Modules\Slot\Domain\Models\Slot;
 use Illuminate\Database\Seeder;
 

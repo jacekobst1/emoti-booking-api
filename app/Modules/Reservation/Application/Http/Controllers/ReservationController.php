@@ -6,8 +6,8 @@ namespace App\Modules\Reservation\Application\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Http\Exceptions\ConflictException;
-use App\Modules\OldReservation\Resources\AdminReservationResource;
 use App\Modules\Reservation\Application\Http\Requests\PostReservationRequest;
+use App\Modules\Reservation\Application\Http\Resources\AdminReservationResource;
 use App\Modules\Reservation\Application\Http\Resources\ReservationResource;
 use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationGetterInterface;

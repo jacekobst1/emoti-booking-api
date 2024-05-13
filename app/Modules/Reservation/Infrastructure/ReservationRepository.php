@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Reservation\Infrastructure;
 
-use App\Modules\OldReservation\Reservation;
 use App\Modules\Reservation\Domain\Contracts\ReservationRepositoryInterface;
+use App\Modules\Reservation\Domain\Models\Reservation;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Ramsey\Uuid\UuidInterface;
 
