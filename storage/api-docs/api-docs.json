@@ -1,16 +1,474 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Emoti Booking AssPI",
+        "title": "Emoti Booking API",
         "version": "1.0.0"
     },
     "paths": {
-        "/api/users": {
+        "/api/admin/reservations": {
             "get": {
-                "operationId": "0e256215655b6638e76d6d3e2597dd33",
+                "tags": [
+                    "reservations"
+                ],
+                "summary": "Return list of all reservations",
+                "description": "Return list of all reservations",
+                "operationId": "get-admin-reservations",
                 "responses": {
                     "200": {
-                        "description": "An example endpoint"
+                        "description": "List of reservations",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "data",
+                                        "links",
+                                        "meta"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/AdminReservationResource"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/links"
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/meta"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/error"
+                    }
+                }
+            }
+        },
+        "/api/reservations": {
+            "get": {
+                "tags": [
+                    "reservations"
+                ],
+                "summary": "Return list of user reservations",
+                "description": "Return list of user reservations",
+                "operationId": "get-user-reservations",
+                "responses": {
+                    "200": {
+                        "description": "List of reservations",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "required": [
+                                        "data",
+                                        "links",
+                                        "meta"
+                                    ],
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/ReservationResource"
+                                        },
+                                        "links": {
+                                            "$ref": "#/components/schemas/links"
+                                        },
+                                        "meta": {
+                                            "$ref": "#/components/schemas/meta"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/error"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "reservations"
+                ],
+                "summary": "Place new reservation",
+                "description": "Place new reservation",
+                "operationId": "post-reservation",
+                "requestBody": {
+                    "description": "Reservation data",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "date_from",
+                                    "date_to"
+                                ],
+                                "properties": {
+                                    "date_from": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-06-01",
+                                        "nullable": false
+                                    },
+                                    "date_to": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2024-06-01",
+                                        "nullable": false
+                                    },
+                                    "asset_id": {
+                                        "type": "string",
+                                        "format": "uuid",
+                                        "example": "7d20ed5d-9d6c-3bcb-9fa6-75d659abfa7a",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/created"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/conflict"
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/unprocessable-entity"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AdminReservationResource": {
+                "required": [
+                    "id",
+                    "user_id",
+                    "asset_id",
+                    "date_from",
+                    "date_to",
+                    "total_price",
+                    "number_of_nights",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "ae6fc2f0-0676-11ec-b4e8-07f02bffb055",
+                        "nullable": false
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "ae6fc2f0-0676-11ec-b4e8-07f02bffb055",
+                        "nullable": false
+                    },
+                    "asset_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "04407850-0677-11ec-a982-4b6482ec6470",
+                        "nullable": false
+                    },
+                    "date_from": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-06-01",
+                        "nullable": false
+                    },
+                    "date_to": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-06-01",
+                        "nullable": false
+                    },
+                    "total_price": {
+                        "description": "Total price in grosze",
+                        "type": "integer",
+                        "example": "1800",
+                        "nullable": false
+                    },
+                    "number_of_nights": {
+                        "type": "integer",
+                        "example": "1",
+                        "nullable": false
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-13 14:26:28",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-13 14:26:28",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ReservationResource": {
+                "required": [
+                    "id",
+                    "asset_id",
+                    "date_from",
+                    "date_to",
+                    "total_price",
+                    "number_of_nights",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "ae6fc2f0-0676-11ec-b4e8-07f02bffb055",
+                        "nullable": false
+                    },
+                    "asset_id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "example": "04407850-0677-11ec-a982-4b6482ec6470",
+                        "nullable": false
+                    },
+                    "date_from": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-06-01",
+                        "nullable": false
+                    },
+                    "date_to": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2024-06-01",
+                        "nullable": false
+                    },
+                    "total_price": {
+                        "description": "Total price in grosze",
+                        "type": "integer",
+                        "example": "1800",
+                        "nullable": false
+                    },
+                    "number_of_nights": {
+                        "type": "integer",
+                        "example": "1",
+                        "nullable": false
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-13 14:26:28",
+                        "nullable": true
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-05-13 14:26:28",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "links": {
+                "properties": {
+                    "first": {
+                        "description": "---------- Pagination schemas ----------",
+                        "type": "string",
+                        "example": "https://example.com/api/things?page=1"
+                    },
+                    "last": {
+                        "type": "string",
+                        "example": "https://example.com/api/things?page=7"
+                    },
+                    "next": {
+                        "type": "string",
+                        "example": "https://example.com/api/things?page=2",
+                        "nullable": true
+                    },
+                    "prev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "meta": {
+                "properties": {
+                    "current_page": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "from": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "last_page": {
+                        "type": "integer",
+                        "example": "7"
+                    },
+                    "path": {
+                        "type": "string",
+                        "example": "https://example.com/api/things"
+                    },
+                    "per_page": {
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "total": {
+                        "type": "integer",
+                        "example": "70"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "responses": {
+            "created": {
+                "description": "Resource created",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "example": "201"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Resource created"
+                                },
+                                "id": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "example": "7d20ed5d-9d6c-3bcb-9fa6-75d659abfa7a"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "unauthenticated": {
+                "description": "Unauthenticated",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Unauthenticated"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "unauthorized": {
+                "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "User does not have the right roles."
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "conflict": {
+                "description": "Resource already exists",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "example": "409"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Resource already exists"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "unprocessable-entity": {
+                "description": "Request failed due to internal error on service layer",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "example": "422"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Request failed due to semantic validation"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
+            "error": {
+                "description": "Internal server error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "type": "integer",
+                                    "example": "500"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Internal server error"
+                                }
+                            },
+                            "type": "object"
+                        }
                     }
                 }
             }
