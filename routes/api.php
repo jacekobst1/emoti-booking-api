@@ -11,7 +11,7 @@ $admin = RoleEnum::Admin->value;
 $user = RoleEnum::User->value;
 
 // Admin and user routes
-Route::middleware(['auth:sanctum', "role:$admin|$user"])->group(function () use ($admin, $user) {
+Route::middleware(['auth:sanctum', "role:$admin|$user"])->group(function () {
     Route::get('/logged-user', [UserController::class, 'getLoggedUser']);
 });
 

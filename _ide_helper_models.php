@@ -13,7 +13,7 @@
 
 namespace App\Modules\Asset\Domain\Models{
 /**
- * 
+ *
  *
  * @property \Ramsey\Uuid\UuidInterface $id
  * @property string $name
@@ -37,9 +37,9 @@ namespace App\Modules\Asset\Domain\Models{
 	class IdeHelperAsset {}
 }
 
-namespace App\Modules\Auth\Models{
+namespace App\Modules\Auth\Models{use App\Modules\Auth\Domain\Models\Permission;
 /**
- * 
+ *
  *
  * @property string $uuid
  * @property string $name
@@ -48,9 +48,9 @@ namespace App\Modules\Auth\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\User\User> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Permission newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Permission newQuery()
@@ -70,18 +70,18 @@ namespace App\Modules\Auth\Models{
 	class IdeHelperPermission {}
 }
 
-namespace App\Modules\Auth\Models{
+namespace App\Modules\Auth\Models{use App\Modules\Auth\Domain\Models\Role;
 /**
- * 
+ *
  *
  * @property string $uuid
  * @property string $name
  * @property string $guard_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\User\User> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Role newQuery()
@@ -101,7 +101,7 @@ namespace App\Modules\Auth\Models{
 
 namespace App\Modules\Reservation\Domain\Models{
 /**
- * 
+ *
  *
  * @property \Ramsey\Uuid\UuidInterface $id
  * @property \Ramsey\Uuid\UuidInterface $user_id
@@ -111,7 +111,7 @@ namespace App\Modules\Reservation\Domain\Models{
  * @property int $total_price
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Modules\User\User $user
+ * @property-read \App\Modules\Auth\Domain\Models\User $user
  * @method static \Database\Factories\ReservationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation newQuery()
@@ -132,7 +132,7 @@ namespace App\Modules\Reservation\Domain\Models{
 
 namespace App\Modules\Slot\Domain\Models{
 /**
- * 
+ *
  *
  * @property \Ramsey\Uuid\UuidInterface $id
  * @property \Ramsey\Uuid\UuidInterface $asset_id
@@ -160,9 +160,9 @@ namespace App\Modules\Slot\Domain\Models{
 	class IdeHelperSlot {}
 }
 
-namespace App\Modules\User{
+namespace App\Modules\User{use App\Modules\Auth\Domain\Models\User;
 /**
- * 
+ *
  *
  * @property \Ramsey\Uuid\UuidInterface $id
  * @property string $name
@@ -176,9 +176,9 @@ namespace App\Modules\User{
  * @property string|null $two_factor_recovery_codes
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\Role> $roles
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count

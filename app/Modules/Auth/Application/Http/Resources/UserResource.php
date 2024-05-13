@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\User\Resources;
+namespace App\Modules\Auth\Application\Http\Resources;
 
-use App\Modules\User\User;
+use App\Modules\Auth\Domain\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 

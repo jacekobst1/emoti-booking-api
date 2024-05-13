@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\User;
+namespace App\Modules\Auth\Domain\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Modules\User\IdeHelperUser;
 use App\Shared\Casts\Model\UuidModelCast;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;

@@ -2,16 +2,17 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Auth\Models;
+namespace App\Modules\Auth\Domain\Models;
 
+use App\Modules\Auth\Models\IdeHelperPermission;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\Permission\Models\Role as SpatieRole;
+use Spatie\Permission\Models\Permission as SpatiePermission;
 
 /**
- * @mixin IdeHelperRole
+ * @mixin IdeHelperPermission
  */
-class Role extends SpatieRole
+class Permission extends SpatiePermission
 {
     use HasFactory;
     use HasUuids;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Modules\Reservation\Domain\Models;
 
 use App\Modules\Asset\Domain\Models\Asset;
+use App\Modules\Auth\Domain\Models\User;
 use App\Modules\Slot\Domain\Models\Slot;
-use App\Modules\User\User;
 use App\Shared\Casts\Model\UuidModelCast;
 use Carbon\Carbon;
 use Database\Factories\ReservationFactory;
