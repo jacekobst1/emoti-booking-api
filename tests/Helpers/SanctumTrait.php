@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Helpers;
 
-use App\Modules\User\User;
+use App\Modules\Auth\Domain\Models\User;
 use Laravel\Sanctum\Sanctum;
 
 trait SanctumTrait

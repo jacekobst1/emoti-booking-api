@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         if (app()->environment('local', 'testing')) {
             $this->call([
                 UsersSeeder::class,
-                VacantSeeder::class,
+                AssetSeeder::class,
             ]);
         }
     }

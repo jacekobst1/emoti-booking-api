@@ -11,9 +11,35 @@
  */
 
 
-namespace App\Modules\Auth\Models{
+namespace App\Modules\Asset\Domain\Models{
 /**
- * 
+ *
+ *
+ * @property \Ramsey\Uuid\UuidInterface $id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Reservation\Domain\Models\Reservation> $reservations
+ * @property-read int|null $reservations_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Slot\Domain\Models\Slot> $slots
+ * @property-read int|null $slots_count
+ * @method static \Database\Factories\AssetFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Asset newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Asset newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Asset query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Asset whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Asset whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Asset whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Asset whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	#[\AllowDynamicProperties]
+	class IdeHelperAsset {}
+}
+
+namespace App\Modules\Auth\Models{use App\Modules\Auth\Domain\Models\Permission;
+/**
+ *
  *
  * @property string $uuid
  * @property string $name
@@ -22,9 +48,9 @@ namespace App\Modules\Auth\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\User\User> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Permission newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Permission newQuery()
@@ -44,18 +70,18 @@ namespace App\Modules\Auth\Models{
 	class IdeHelperPermission {}
 }
 
-namespace App\Modules\Auth\Models{
+namespace App\Modules\Auth\Models{use App\Modules\Auth\Domain\Models\Role;
 /**
- * 
+ *
  *
  * @property string $uuid
  * @property string $name
  * @property string $guard_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\User\User> $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Role newQuery()
@@ -73,23 +99,24 @@ namespace App\Modules\Auth\Models{
 	class IdeHelperRole {}
 }
 
-namespace App\Modules\Reservation{
+namespace App\Modules\Reservation\Domain\Models{
 /**
- * 
+ *
  *
  * @property \Ramsey\Uuid\UuidInterface $id
+ * @property \Ramsey\Uuid\UuidInterface $user_id
+ * @property \Ramsey\Uuid\UuidInterface $asset_id
  * @property string $date_from
  * @property string $date_to
  * @property int $total_price
- * @property string $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Vacant\Vacant> $vacancies
- * @property-read int|null $vacancies_count
+ * @property-read \App\Modules\Auth\Domain\Models\User $user
  * @method static \Database\Factories\ReservationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereAssetId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereDateFrom($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Reservation whereDateTo($value)
@@ -103,9 +130,39 @@ namespace App\Modules\Reservation{
 	final class IdeHelperReservation {}
 }
 
-namespace App\Modules\User{
+namespace App\Modules\Slot\Domain\Models{
 /**
- * 
+ *
+ *
+ * @property \Ramsey\Uuid\UuidInterface $id
+ * @property \Ramsey\Uuid\UuidInterface $asset_id
+ * @property string|null $reservation_id
+ * @property \Illuminate\Support\Carbon $date
+ * @property int $price
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Modules\Asset\Domain\Models\Asset $asset
+ * @property-read \App\Modules\Reservation\Domain\Models\Reservation|null $reservation
+ * @method static \Database\Factories\SlotFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot whereAssetId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot whereReservationId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Slot whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	#[\AllowDynamicProperties]
+	class IdeHelperSlot {}
+}
+
+namespace App\Modules\User{use App\Modules\Auth\Domain\Models\User;
+/**
+ *
  *
  * @property \Ramsey\Uuid\UuidInterface $id
  * @property string $name
@@ -119,9 +176,9 @@ namespace App\Modules\User{
  * @property string|null $two_factor_recovery_codes
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Models\Permission> $permissions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\Permission> $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Models\Role> $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Auth\Domain\Models\Role> $roles
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
@@ -147,33 +204,5 @@ namespace App\Modules\User{
  */
 	#[\AllowDynamicProperties]
 	class IdeHelperUser {}
-}
-
-namespace App\Modules\Vacant{
-/**
- * 
- *
- * @property \Ramsey\Uuid\UuidInterface $id
- * @property string $date
- * @property int $number_of_beds
- * @property int $price
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Modules\Reservation\Reservation> $reservations
- * @property-read int|null $reservations_count
- * @method static \Database\Factories\VacantFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Vacant newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Vacant newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Vacant query()
- * @method static \Illuminate\Database\Eloquent\Builder|Vacant whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Vacant whereDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Vacant whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Vacant whereNumberOfBeds($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Vacant wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Vacant whereUpdatedAt($value)
- * @mixin \Eloquent
- */
-	#[\AllowDynamicProperties]
-	class IdeHelperVacant {}
 }
 
