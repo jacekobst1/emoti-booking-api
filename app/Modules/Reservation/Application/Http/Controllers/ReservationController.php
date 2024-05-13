@@ -11,7 +11,6 @@ use App\Modules\Reservation\Application\Http\Resources\AdminReservationResource;
 use App\Modules\Reservation\Application\Http\Resources\ReservationResource;
 use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationGetterInterface;
-use App\Modules\User\User;
 use App\Shared\Response\JsonResp;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -28,10 +27,7 @@ final class ReservationController extends Controller
 
     public function getUserReservationsList(ReservationGetterInterface $getter): AnonymousResourceCollection
     {
-        /** @var User $user */
-        $user = auth()->user();
-
-        $reservations = $getter->paginateUserReservations($user->id);
+        $reservations = $getter->paginateLoggedUserReservations();
 
         return ReservationResource::collection($reservations);
     }

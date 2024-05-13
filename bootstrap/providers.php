@@ -18,4 +18,5 @@ return [
      */
     App\Modules\Reservation\Application\Providers\ReservationServiceProvider::class,
     App\Modules\Slot\Application\Providers\SlotServiceProvider::class,
+    App\Modules\Auth\Application\Providers\AuthServiceProvider::class,
 ];
