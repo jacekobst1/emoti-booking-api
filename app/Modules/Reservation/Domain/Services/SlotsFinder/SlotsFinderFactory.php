@@ -13,7 +13,7 @@ final readonly class SlotsFinderFactory
     {
     }
 
-    public function make(?UuidInterface $assetId = null): SlotsFinderInterface
+    public function make(?UuidInterface $assetId): SlotsFinderInterface
     {
         return $assetId
             ? $this->app->make(AssetSlotsFinder::class, ['assetId' => $assetId])

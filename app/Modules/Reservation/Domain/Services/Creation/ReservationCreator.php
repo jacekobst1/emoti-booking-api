@@ -53,7 +53,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
      *
      * @throws ConflictException
      */
-    private function getMatchingFreeSlots(array $dates, ?UuidInterface $assetId = null): SlotDtoCollection
+    private function getMatchingFreeSlots(array $dates, ?UuidInterface $assetId): SlotDtoCollection
     {
         $slotsFinder = $this->slotFinderFactory->make($assetId);
         $matchingFreeSlots = $slotsFinder->findByDates($dates);

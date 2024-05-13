@@ -45,12 +45,23 @@ final class SlotDtoCollection extends Collection
     }
 
     /**
-     * @return self<string, self<int, SlotDto>>
+     * @return self<string, SlotDtoCollection<int, SlotDto>>
      */
     public function groupByAssetId(): self
     {
         return $this->groupBy(
             static fn(SlotDto $slot): UuidInterface => $slot->assetId
         );
+    }
+
+    public function equals(self $other): bool
+    {
+        $selfArray = [...$this->items];
+        $otherArray = [...$other->items];
+
+        sort($selfArray);
+        sort($otherArray);
+
+        return $selfArray === $otherArray;
     }
 }

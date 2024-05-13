@@ -14,6 +14,12 @@ final readonly class RandomSlotsFinder implements SlotsFinderInterface
     {
     }
 
+    /**
+     * We want to return dates only if there is uninterrupted sequence of free slots, day by day.
+     * That's why we're checking if the number of slots is equal to the number of dates.
+     *
+     * @param non-empty-list<non-empty-string> $dates
+     */
     public function findByDates(array $dates): ?SlotDtoCollection
     {
         /** @var Collection<int, SlotDtoCollection> $freeSlotsGroupedByAsset */
