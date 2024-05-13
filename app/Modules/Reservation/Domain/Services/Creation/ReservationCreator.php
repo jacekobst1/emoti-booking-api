@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Reservation\Domain\Services;
+namespace App\Modules\Reservation\Domain\Services\Creation;
 
 use App\Http\Exceptions\ConflictException;
 use App\Modules\Auth\Domain\Models\User;
@@ -10,17 +10,17 @@ use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationModelManagerInterface;
 use App\Modules\Reservation\Domain\DataTransferObjects\ReservationDatesDto;
 use App\Modules\Reservation\Domain\Models\Reservation;
+use App\Modules\Reservation\Domain\Services\SlotsFinder\SlotsFinderFactory;
 use App\Modules\Slot\Domain\Contracts\DataTransferObjects\SlotDtoCollection;
-use App\Modules\Slot\Domain\Contracts\SlotGetterInterface;
 use App\Modules\Slot\Domain\Contracts\SlotReserverInterface;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Ramsey\Uuid\UuidInterface;
 use Throwable;
 
 final readonly class ReservationCreator implements ReservationCreatorInterface
 {
     public function __construct(
-        private SlotGetterInterface $slotGetter,
+        private SlotsFinderFactory $slotFinderFactory,
         private ReservationModelManagerInterface $reservationModelManager,
         private SlotReserverInterface $slotReserver,
     ) {
@@ -30,6 +30,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
      * @param array{
      *     date_from: non-empty-string,
      *     date_to: non-empty-string,
+     *     asset_id: ?UuidInterface,
      * } $data
      *
      * @throws Throwable|ConflictException
@@ -37,7 +38,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
     public function handle(array $data): Reservation
     {
         $dates = (new ReservationDatesDto($data['date_from'], $data['date_to']))->getArrayOfDays();
-        $slots = $this->getMatchingFreeSlots($dates);
+        $slots = $this->getMatchingFreeSlots($dates, $data['asset_id']);
 
         return DB::transaction(function () use ($data, $slots) {
             $reservation = $this->createModel($data, $slots);
@@ -52,14 +53,10 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
      *
      * @throws ConflictException
      */
-    private function getMatchingFreeSlots(array $dates): SlotDtoCollection
+    private function getMatchingFreeSlots(array $dates, ?UuidInterface $assetId = null): SlotDtoCollection
     {
-        /** @var Collection<int, SlotDtoCollection> $freeSlotsGroupedByAsset */
-        $freeSlotsGroupedByAsset = $this->slotGetter->getFreeSlotsByDates($dates)->groupByAssetId();
-
-        $matchingFreeSlots = $freeSlotsGroupedByAsset->first(
-            static fn(SlotDtoCollection $slots): bool => $slots->count() === count($dates)
-        );
+        $slotsFinder = $this->slotFinderFactory->make($assetId);
+        $matchingFreeSlots = $slotsFinder->findByDates($dates);
 
         if (!$matchingFreeSlots) {
             throw new ConflictException('No asset available for given dates');

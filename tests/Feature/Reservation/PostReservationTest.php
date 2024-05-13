@@ -29,6 +29,7 @@ final class PostReservationTest extends TestCase
             'date_from' => '2022-01-01',
             'date_to' => '2022-01-03',
         ])->toArray();
+        unset($data['asset_id']);
         $asset = Asset::factory()->create();
 
         $period = CarbonPeriod::create($data['date_from'], $data['date_to'])->toArray();

@@ -8,7 +8,7 @@ use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationGetterInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationModelManagerInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationRepositoryInterface;
-use App\Modules\Reservation\Domain\Services\ReservationCreator;
+use App\Modules\Reservation\Domain\Services\Creation\ReservationCreator;
 use App\Modules\Reservation\Domain\Services\ReservationGetter;
 use App\Modules\Reservation\Infrastructure\ReservationModelManager;
 use App\Modules\Reservation\Infrastructure\ReservationRepository;
