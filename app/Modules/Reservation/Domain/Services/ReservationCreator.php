@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Reservation\Domain\Services\Creation;
+namespace App\Modules\Reservation\Domain\Services;
 
 use App\Http\Exceptions\ConflictException;
+use App\Modules\Auth\Domain\Contracts\AuthServiceInterface;
 use App\Modules\Auth\Domain\Models\User;
 use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationModelManagerInterface;
+use App\Modules\Reservation\Domain\Contracts\SlotsFinderFactoryInterface;
 use App\Modules\Reservation\Domain\DataTransferObjects\ReservationDatesDto;
 use App\Modules\Reservation\Domain\Models\Reservation;
-use App\Modules\Reservation\Domain\Services\SlotsFinder\SlotsFinderFactory;
 use App\Modules\Slot\Domain\Contracts\DataTransferObjects\SlotDtoCollection;
 use App\Modules\Slot\Domain\Contracts\SlotReserverInterface;
 use Illuminate\Support\Facades\DB;
@@ -20,9 +21,10 @@ use Throwable;
 final readonly class ReservationCreator implements ReservationCreatorInterface
 {
     public function __construct(
-        private SlotsFinderFactory $slotFinderFactory,
+        private SlotsFinderFactoryInterface $slotFinderFactory,
         private ReservationModelManagerInterface $reservationModelManager,
         private SlotReserverInterface $slotReserver,
+        private AuthServiceInterface $authService,
     ) {
     }
 
@@ -79,7 +81,8 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
         ]);
 
         // just for the purpose of making frontend work without authentication
-        $reservation->user_id = auth()->id() ?? User::whereEmail('user@gmail.com')->first()->id;
+        $reservation->user_id = $this->authService->getLoggedUserId()
+            ?? User::whereEmail('user@gmail.com')->first()->id;
         $reservation->asset_id = $slots->first()->assetId;
         $reservation->total_price = $slots->getTotalPrice();
 
