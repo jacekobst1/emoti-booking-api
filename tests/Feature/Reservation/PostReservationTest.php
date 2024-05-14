@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\Reservation;
 
 use App\Modules\Asset\Domain\Models\Asset;
+use App\Modules\Reservation\Domain\DataTransferObjects\ReservationDatesDto;
 use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\Slot\Domain\Models\Slot;
-use Carbon\CarbonPeriod;
 use Tests\Helpers\SanctumTrait;
 use Tests\TestCase;
 
@@ -32,13 +32,12 @@ final class PostReservationTest extends TestCase
         unset($data['asset_id']);
         $asset = Asset::factory()->create();
 
-        $period = CarbonPeriod::create($data['date_from'], $data['date_to'])->toArray();
-        array_pop($period);
+        $dates = (new ReservationDatesDto($data['date_from'], $data['date_to']))->getArrayOfDays();
         $totalPrice = 0;
-        foreach ($period as $date) {
+        foreach ($dates as $date) {
             $slot = Slot::factory()
                 ->for($asset)
-                ->create(['date' => $date->toDateString()]);
+                ->create(['date' => $date]);
             $totalPrice += $slot->price;
         }
 
@@ -49,8 +48,8 @@ final class PostReservationTest extends TestCase
         $response->assertSuccessful();
         $id = $response->json('data.id');
         $reservation = Reservation::find($id);
-//        $this->assertSame(2, $reservation->slots()->count()); TODO
-//        $this->assertSame($totalPrice, $reservation->total_price); TODO
+        $this->assertSame(2, $reservation->slots()->count());
+        $this->assertSame($totalPrice, $reservation->total_price);
     }
 
     public function testErrorOnWrongPayload(): void
@@ -72,6 +71,26 @@ final class PostReservationTest extends TestCase
             ],
             'date_to' => [
                 'The date to field is required.',
+            ],
+        ]);
+    }
+
+    public function testCannotStoreForLessThanOneDay(): void
+    {
+        // given
+        $data = [
+            'date_from' => '2022-01-01',
+            'date_to' => '2022-01-01',
+        ];
+
+        // when
+        $response = $this->postJson('/api/reservations', $data);
+
+        // then
+        $response->assertUnprocessable();
+        $response->assertJsonValidationErrors([
+            'date_to' => [
+                'The date to field must be a date after date from.',
             ],
         ]);
     }
