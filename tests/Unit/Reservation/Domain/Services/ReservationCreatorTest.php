@@ -12,6 +12,7 @@ use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\Reservation\Domain\Services\ReservationCreator;
 use App\Modules\Reservation\Domain\Services\SlotsFinder\SlotsFinderInterface;
 use App\Modules\Slot\Domain\Contracts\SlotReserverInterface;
+use Illuminate\Support\Carbon;
 use Mockery;
 use Mockery\MockInterface;
 use Tests\Helpers\SanctumTrait;
@@ -85,8 +86,8 @@ final class ReservationCreatorTest extends TestCase
 
         // given
         $data = (new PostReservationRequest(
-            date_from: '2022-01-01',
-            date_to: '2022-01-03',
+            date_from: Carbon::now()->addDay()->toDateString(),
+            date_to: Carbon::now()->addDays(2)->toDateString(),
             asset_id: null,
         ))->toArray();
         $creator = $this->app->make(ReservationCreator::class);
@@ -147,8 +148,8 @@ final class ReservationCreatorTest extends TestCase
 
         // given
         $data = (new PostReservationRequest(
-            date_from: '2022-01-01',
-            date_to: '2022-01-03',
+            date_from: Carbon::now()->addDay()->toDateString(),
+            date_to: Carbon::now()->addDays(2)->toDateString(),
             asset_id: null,
         ))->toArray();
         $creator = $this->app->make(ReservationCreator::class);

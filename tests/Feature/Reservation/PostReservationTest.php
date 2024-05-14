@@ -8,6 +8,7 @@ use App\Modules\Asset\Domain\Models\Asset;
 use App\Modules\Reservation\Domain\DataTransferObjects\ReservationDatesDto;
 use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\Slot\Domain\Models\Slot;
+use Illuminate\Support\Carbon;
 use Tests\Helpers\SanctumTrait;
 use Tests\TestCase;
 
@@ -26,8 +27,8 @@ final class PostReservationTest extends TestCase
     {
         // given
         $data = Reservation::factory()->make([
-            'date_from' => '2022-01-01',
-            'date_to' => '2022-01-03',
+            'date_from' => Carbon::now()->addDay()->toDateString(),
+            'date_to' => Carbon::now()->addDays(3)->toDateString(),
         ])->toArray();
         unset($data['asset_id']);
         $asset = Asset::factory()->create();
@@ -79,19 +80,35 @@ final class PostReservationTest extends TestCase
     {
         // given
         $data = [
-            'date_from' => '2022-01-01',
-            'date_to' => '2022-01-01',
+            'date_from' => '2025-01-01',
+            'date_to' => '2025-01-01',
         ];
 
         // when
         $response = $this->postJson('/api/reservations', $data);
 
         // then
-        $response->assertUnprocessable();
-        $response->assertJsonValidationErrors([
-            'date_to' => [
-                'The date to field must be a date after date from.',
-            ],
+        $response->assertConflict();
+        $response->assertJsonFragment([
+            'message' => 'Reservation must be at least 1 day long',
+        ]);
+    }
+
+    public function testCannotStoreForPastPeriod(): void
+    {
+        // given
+        $data = [
+            'date_from' => '2022-01-01',
+            'date_to' => '2022-01-05',
+        ];
+
+        // when
+        $response = $this->postJson('/api/reservations', $data);
+
+        // then
+        $response->assertConflict();
+        $response->assertJsonFragment([
+            'message' => 'Reservation cannot be in the past',
         ]);
     }
 }

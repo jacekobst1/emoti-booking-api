@@ -7,7 +7,6 @@ namespace App\Modules\Reservation\Application\Http\Requests;
 use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use Ramsey\Uuid\UuidInterface;
-use Spatie\LaravelData\Attributes\Validation\After;
 use Spatie\LaravelData\Attributes\Validation\Date;
 use Spatie\LaravelData\Data;
 
@@ -17,7 +16,7 @@ final class PostReservationRequest extends Data
         #[Date]
         public string $date_from,
 
-        #[Date, After('date_from')]
+        #[Date]
         public string $date_to,
 
         public ?UuidInterface $asset_id = null,

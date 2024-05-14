@@ -14,6 +14,7 @@ use App\Modules\Reservation\Domain\DataTransferObjects\ReservationDatesDto;
 use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\Slot\Domain\Contracts\DataTransferObjects\SlotDtoCollection;
 use App\Modules\Slot\Domain\Contracts\SlotReserverInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\UuidInterface;
 use Throwable;
@@ -39,6 +40,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
      */
     public function handle(array $data): Reservation
     {
+        $this->validateDates($data['date_from'], $data['date_to']);
         $dates = (new ReservationDatesDto($data['date_from'], $data['date_to']))->getArrayOfDays();
         $slots = $this->getMatchingFreeSlots($dates, $data['asset_id']);
 
@@ -48,6 +50,23 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
 
             return $reservation;
         });
+    }
+
+    /**
+     * @throws ConflictException
+     */
+    private function validateDates(string $firstDateString, string $lastDateString): void
+    {
+        $firstDate = Carbon::parse($firstDateString);
+        $lastDate = Carbon::parse($lastDateString);
+
+        if ($firstDate->isPast()) {
+            throw new ConflictException('Reservation cannot be in the past');
+        }
+
+        if ($firstDate->isSameDay($lastDate)) {
+            throw new ConflictException('Reservation must be at least 1 day long');
+        }
     }
 
     /**
