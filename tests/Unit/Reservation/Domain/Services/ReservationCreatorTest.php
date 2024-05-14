@@ -11,14 +11,11 @@ use App\Modules\Reservation\Domain\Contracts\SlotsFinderFactoryInterface;
 use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\Reservation\Domain\Services\ReservationCreator;
 use App\Modules\Reservation\Domain\Services\SlotsFinder\SlotsFinderInterface;
-use App\Modules\Slot\Domain\Contracts\DataTransferObjects\SlotDto;
-use App\Modules\Slot\Domain\Contracts\DataTransferObjects\SlotDtoCollection;
 use App\Modules\Slot\Domain\Contracts\SlotReserverInterface;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Mockery;
 use Mockery\MockInterface;
 use Tests\Helpers\SanctumTrait;
+use Tests\Helpers\SlotHelper;
 use Tests\TestCase;
 use Throwable;
 
@@ -40,20 +37,7 @@ final class ReservationCreatorTest extends TestCase
     public function testHandle(): void
     {
         // mock
-        $slotDtoCollection = new SlotDtoCollection([ // TODO create helper class
-            new SlotDto(
-                id: Str::uuid(),
-                assetId: Str::uuid(),
-                date: Carbon::parse('2022-01-01'),
-                price: 1000,
-            ),
-            new SlotDto(
-                id: Str::uuid(),
-                assetId: Str::uuid(),
-                date: Carbon::parse('2022-01-02'),
-                price: 1300,
-            ),
-        ]);
+        $slotDtoCollection = SlotHelper::getSlotDtoCollection();
         $randomSlotsFinder = Mockery::mock(
             SlotsFinderInterface::class,
             function (MockInterface $mock) use ($slotDtoCollection) {
