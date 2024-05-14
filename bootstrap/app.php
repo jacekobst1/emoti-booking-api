@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Middleware\ForceJsonResponse;
+use App\Http\Middleware\SubstituteUuids;
 use App\Shared\Response\JsonResp;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->append(ForceJsonResponse::class);
+        $middleware->api(SubstituteUuids::class);
         $middleware->statefulApi();
         $middleware->alias([
             'role' => RoleMiddleware::class,
