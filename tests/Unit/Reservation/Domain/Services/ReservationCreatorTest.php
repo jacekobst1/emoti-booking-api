@@ -34,7 +34,7 @@ final class ReservationCreatorTest extends TestCase
      * @throws Throwable
      * @throws ConflictException
      */
-    public function testHandle(): void
+    public function testHandleSuccess(): void
     {
         // mock
         $slotDtoCollection = SlotHelper::getSlotDtoCollection();
@@ -79,6 +79,68 @@ final class ReservationCreatorTest extends TestCase
                         ->once()
                         ->with($reservation->id, $slotDtoCollection->getIds())
                         ->andReturnNull();
+                }
+            )
+        );
+
+        // given
+        $data = (new PostReservationRequest(
+            date_from: '2022-01-01',
+            date_to: '2022-01-03',
+            asset_id: null,
+        ))->toArray();
+        $creator = $this->app->make(ReservationCreator::class);
+
+        // when
+        $result = $creator->handle($data);
+
+        // then
+        $this->assertSame($reservation, $result);
+    }
+
+    /**
+     * @throws Throwable
+     * @throws ConflictException
+     */
+    public function testHandleAndSlotsNotFound(): void
+    {
+        // then
+        $this->expectException(ConflictException::class);
+
+        // mock
+        $randomSlotsFinder = Mockery::mock(
+            SlotsFinderInterface::class,
+            function (MockInterface $mock) {
+                $mock->shouldReceive('findByDates')
+                    ->once()
+                    ->andReturnNull();
+            }
+        );
+
+        $this->instance(
+            SlotsFinderFactoryInterface::class,
+            Mockery::mock(SlotsFinderFactoryInterface::class, function (MockInterface $mock) use ($randomSlotsFinder) {
+                $mock->shouldReceive('make')
+                    ->with(null)
+                    ->once()
+                    ->andReturn($randomSlotsFinder);
+            })
+        );
+
+        $reservation = Reservation::factory()->create();
+        $this->instance(
+            ReservationModelManagerInterface::class,
+            Mockery::mock(ReservationModelManagerInterface::class, function (MockInterface $mock) use ($reservation) {
+                $mock->shouldNotHaveBeenCalled();
+            })
+        );
+
+        $this->instance(
+            SlotReserverInterface::class,
+            Mockery::mock(
+                SlotReserverInterface::class,
+                function (MockInterface $mock) use ($reservation) {
+                    $mock->shouldNotHaveBeenCalled();
                 }
             )
         );
