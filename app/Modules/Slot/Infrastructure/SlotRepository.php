@@ -22,7 +22,7 @@ final readonly class SlotRepository implements SlotRepositoryInterface
     public function getFreeSlotsByDates(array $dates): Collection
     {
         return $this->model
-            ->select('id', 'asset_id', 'date', 'price')
+            ->select(['id', 'asset_id', 'date', 'price'])
             ->whereIn('date', $dates)
             ->whereNull('reservation_id')
             ->get();
@@ -35,7 +35,7 @@ final readonly class SlotRepository implements SlotRepositoryInterface
     public function getFreeAssetSlotsByDates(UuidInterface $assetId, array $dates): Collection
     {
         return $this->model
-            ->select('id', 'asset_id', 'date', 'price')
+            ->select(['id', 'asset_id', 'date', 'price'])
             ->where('asset_id', $assetId->toString())
             ->whereIn('date', $dates)
             ->whereNull('reservation_id')
