@@ -13,11 +13,10 @@ final class SlotRepositoryTest extends TestCase
 {
     public function testGetFreeSlotsByDates(): void
     {
+        // given
         $asset = Asset::factory()->create();
         $slot1 = Slot::factory()->for($asset)->create(['date' => '2022-01-01']);
         $slot2 = Slot::factory()->for($asset)->create(['date' => '2022-01-02']);
-
-        // given
         $slotRepository = $this->app->make(SlotRepository::class);
 
         // when
@@ -31,12 +30,11 @@ final class SlotRepositoryTest extends TestCase
 
     public function testGetFreeAssetSlotsByDates(): void
     {
+        // given
         $asset = Asset::factory()->create();
         $slot1 = Slot::factory()->for($asset)->create(['date' => '2022-01-01']);
         $slotFromAnotherAsset = Slot::factory()->create(['date' => '2022-01-02']);
         $slot2 = Slot::factory()->for($asset)->create(['date' => '2022-01-02']);
-
-        // given
         $slotRepository = $this->app->make(SlotRepository::class);
 
         // when
