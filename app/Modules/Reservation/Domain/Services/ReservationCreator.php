@@ -10,7 +10,6 @@ use App\Modules\Auth\Domain\Models\User;
 use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationModelManagerInterface;
 use App\Modules\Reservation\Domain\Contracts\SlotsFinderFactoryInterface;
-use App\Modules\Reservation\Domain\DataTransferObjects\ReservationDatesDto;
 use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Modules\Slot\Domain\Contracts\DataTransferObjects\SlotDtoCollection;
 use App\Modules\Slot\Domain\Contracts\SlotReserverInterface;
@@ -22,6 +21,7 @@ use Throwable;
 final readonly class ReservationCreator implements ReservationCreatorInterface
 {
     public function __construct(
+        private DatesExtractor $datesExtractor,
         private SlotsFinderFactoryInterface $slotFinderFactory,
         private ReservationModelManagerInterface $reservationModelManager,
         private SlotReserverInterface $slotReserver,
@@ -41,7 +41,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
     public function handle(array $data): Reservation
     {
         $this->validateDates($data['date_from'], $data['date_to']);
-        $dates = (new ReservationDatesDto($data['date_from'], $data['date_to']))->getArrayOfDays();
+        $dates = $this->datesExtractor->extractDates($data['date_from'], $data['date_to']);
         $slots = $this->getMatchingFreeSlots($dates, $data['asset_id']);
 
         return DB::transaction(function () use ($data, $slots) {
@@ -55,16 +55,16 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
     /**
      * @throws ConflictException
      */
-    private function validateDates(string $firstDateString, string $lastDateString): void
+    private function validateDates(string $dateFromString, string $dateToString): void
     {
-        $firstDate = Carbon::parse($firstDateString);
-        $lastDate = Carbon::parse($lastDateString);
+        $dateFrom = Carbon::parse($dateFromString);
+        $dateTo = Carbon::parse($dateToString);
 
-        if ($firstDate->isPast()) {
+        if ($dateFrom->isPast()) {
             throw new ConflictException('Reservation cannot be in the past');
         }
 
-        if ($firstDate->isSameDay($lastDate)) {
+        if ($dateFrom->isSameDay($dateTo)) {
             throw new ConflictException('Reservation must be at least 1 day long');
         }
     }

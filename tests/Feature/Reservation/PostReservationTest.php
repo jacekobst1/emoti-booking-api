@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Tests\Feature\Reservation;
 
 use App\Modules\Asset\Domain\Models\Asset;
-use App\Modules\Reservation\Domain\DataTransferObjects\ReservationDatesDto;
 use App\Modules\Reservation\Domain\Models\Reservation;
+use App\Modules\Reservation\Domain\Services\DatesExtractor;
 use App\Modules\Slot\Domain\Models\Slot;
 use Illuminate\Support\Carbon;
 use Tests\Helpers\SanctumTrait;
@@ -33,7 +33,7 @@ final class PostReservationTest extends TestCase
         unset($data['asset_id']);
         $asset = Asset::factory()->create();
 
-        $dates = (new ReservationDatesDto($data['date_from'], $data['date_to']))->getArrayOfDays();
+        $dates = (new DatesExtractor())->extractDates($data['date_from'], $data['date_to']);
         $totalPrice = 0;
         foreach ($dates as $date) {
             $slot = Slot::factory()
