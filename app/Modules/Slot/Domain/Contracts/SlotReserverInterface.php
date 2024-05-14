@@ -8,5 +8,8 @@ use Ramsey\Uuid\UuidInterface;
 
 interface SlotReserverInterface
 {
+    /**
+     * @param list<UuidInterface> $slotIds
+     */
     public function reserveSlots(UuidInterface $reservationId, array $slotIds): void;
 }
