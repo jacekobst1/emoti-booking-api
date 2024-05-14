@@ -9,6 +9,11 @@ use App\Modules\Reservation\Domain\Models\Reservation;
 
 final class ReservationModelManager implements ReservationModelManagerInterface
 {
+    public function newInstance(array $properties = []): Reservation
+    {
+        return new Reservation($properties);
+    }
+
     public function save(Reservation $model): void
     {
         $model->save();

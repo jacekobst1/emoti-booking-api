@@ -8,5 +8,7 @@ use App\Modules\Reservation\Domain\Models\Reservation;
 
 interface ReservationModelManagerInterface
 {
+    public function newInstance(array $properties): Reservation;
+
     public function save(Reservation $model): void;
 }

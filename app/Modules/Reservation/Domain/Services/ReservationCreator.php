@@ -75,10 +75,7 @@ final readonly class ReservationCreator implements ReservationCreatorInterface
      */
     private function createModel(array $data, SlotDtoCollection $slots): Reservation
     {
-        $reservation = new Reservation([
-            'date_from' => $data['date_from'],
-            'date_to' => $data['date_to'],
-        ]);
+        $reservation = $this->reservationModelManager->newInstance($data);
 
         // just for the purpose of making frontend work without authentication
         $reservation->user_id = $this->authService->getLoggedUserId()
