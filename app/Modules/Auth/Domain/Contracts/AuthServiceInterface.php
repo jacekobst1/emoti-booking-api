@@ -9,7 +9,7 @@ use Ramsey\Uuid\UuidInterface;
 
 interface AuthServiceInterface
 {
-    public function getLoggedUserId(): UuidInterface;
+    public function getLoggedUserId(): ?UuidInterface;
 
-    public function getLoggedUser(): UserDto;
+    public function getLoggedUser(): ?UserDto;
 }

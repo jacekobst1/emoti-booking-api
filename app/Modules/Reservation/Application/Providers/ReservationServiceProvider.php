@@ -19,6 +19,9 @@ use Illuminate\Support\ServiceProvider;
 
 class ReservationServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array<class-string, class-string> $bindings
+     */
     public array $bindings = [
         // ports driven by core
         ReservationRepositoryInterface::class => ReservationRepository::class,

@@ -11,6 +11,9 @@ use Illuminate\Support\ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array<class-string, class-string> $bindings
+     */
     public array $bindings = [
         // ports that are driving core
         AuthServiceInterface::class => AuthService::class,

@@ -43,7 +43,7 @@ final class Reservation extends Model
     }
 
     /**
-     * @return BelongsTo<User>
+     * @return BelongsTo<User, Reservation>
      */
     public function user(): BelongsTo
     {
@@ -51,7 +51,7 @@ final class Reservation extends Model
     }
 
     /**
-     * @return BelongsTo<Asset>
+     * @return BelongsTo<Asset, Reservation>
      */
     public function asset(): BelongsTo
     {

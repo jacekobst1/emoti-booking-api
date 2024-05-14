@@ -17,6 +17,9 @@ use Illuminate\Support\ServiceProvider;
 
 class SlotServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array<class-string, class-string> $bindings
+     */
     public array $bindings = [
         // ports driven by core
         SlotRepositoryInterface::class => SlotRepository::class,

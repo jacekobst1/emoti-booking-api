@@ -14,7 +14,10 @@ final readonly class SlotGetter implements SlotGetterInterface
     public function __construct(private SlotRepositoryInterface $slotRepository)
     {
     }
-
+    
+    /**
+     * @param non-empty-list<non-empty-string> $dates
+     */
     public function getFreeSlotsByDates(array $dates): SlotDtoCollection
     {
         $slots = $this->slotRepository->getFreeSlotsByDates($dates);
@@ -22,6 +25,9 @@ final readonly class SlotGetter implements SlotGetterInterface
         return SlotDtoCollection::fromModelsCollection($slots);
     }
 
+    /**
+     * @param non-empty-list<non-empty-string> $dates
+     */
     public function getFreeAssetSlotsByDates(UuidInterface $assetId, array $dates): SlotDtoCollection
     {
         $slots = $this->slotRepository->getFreeAssetSlotsByDates($assetId, $dates);

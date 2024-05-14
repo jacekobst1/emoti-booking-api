@@ -8,6 +8,9 @@ use App\Modules\Reservation\Domain\Models\Reservation;
 
 interface ReservationModelManagerInterface
 {
+    /**
+     * @param array{non-empty-string, mixed} $properties
+     */
     public function newInstance(array $properties): Reservation;
 
     public function save(Reservation $model): void;

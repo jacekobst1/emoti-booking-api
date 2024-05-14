@@ -16,17 +16,17 @@ final readonly class AuthService implements AuthServiceInterface
     {
     }
 
-    public function getLoggedUserId(): UuidInterface
+    public function getLoggedUserId(): ?UuidInterface
     {
-        /** @var UuidInterface */
+        /** @var ?UuidInterface */
         return $this->authManager->id();
     }
 
-    public function getLoggedUser(): UserDto
+    public function getLoggedUser(): ?UserDto
     {
-        /** @var User $userModel */
+        /** @var ?User $userModel */
         $userModel = $this->authManager->user();
 
-        return UserDto::fromUserModel($userModel);
+        return $userModel ? UserDto::fromUserModel($userModel) : null;
     }
 }
