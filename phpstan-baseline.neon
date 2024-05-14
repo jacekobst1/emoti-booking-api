@@ -1,0 +1,26 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$data of method App\\\\Modules\\\\Reservation\\\\Domain\\\\Contracts\\\\ReservationCreatorInterface\\:\\:handle\\(\\) expects array\\{date_from\\: string, date_to\\: string, asset_id\\: Ramsey\\\\Uuid\\\\UuidInterface\\|null\\}, array given\\.$#"
+			count: 1
+			path: app/Modules/Reservation/Application/Http/Controllers/ReservationController.php
+
+		-
+			message: "#^Parameter \\#1 \\$properties of method App\\\\Modules\\\\Reservation\\\\Domain\\\\Contracts\\\\ReservationModelManagerInterface\\:\\:newInstance\\(\\) expects array\\{non\\-empty\\-string, mixed\\}, array\\{date_from\\: non\\-empty\\-string, date_to\\: non\\-empty\\-string\\} given\\.$#"
+			count: 1
+			path: app/Modules/Reservation/Domain/Services/ReservationCreator.php
+
+		-
+			message: "#^Default value of the parameter \\#1 \\$properties \\(array\\{\\}\\) of method App\\\\Modules\\\\Reservation\\\\Infrastructure\\\\ReservationModelManager\\:\\:newInstance\\(\\) is incompatible with type array\\{non\\-empty\\-string, mixed\\}\\.$#"
+			count: 1
+			path: app/Modules/Reservation/Infrastructure/ReservationModelManager.php
+
+		-
+			message: "#^Method App\\\\Shared\\\\Casts\\\\SpatieData\\\\UuidDataCast\\:\\:cast\\(\\) has parameter \\$context with generic class Spatie\\\\LaravelData\\\\Support\\\\Creation\\\\CreationContext but does not specify its types\\: TData$#"
+			count: 1
+			path: app/Shared/Casts/SpatieData/UuidDataCast.php
+
+		-
+			message: "#^Method App\\\\Shared\\\\Casts\\\\SpatieData\\\\UuidDataCast\\:\\:cast\\(\\) has parameter \\$properties with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: app/Shared/Casts/SpatieData/UuidDataCast.php
