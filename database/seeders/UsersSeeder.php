@@ -13,18 +13,26 @@ final class UsersSeeder extends Seeder
 {
     public function run(): void
     {
-        $user = User::create([
-            'name' => 'User',
-            'email' => 'user@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
+        $user = User::createOrFirst(
+            [
+                'email' => 'user@gmail.com',
+            ],
+            [
+                'name' => 'User',
+                'password' => Hash::make('password'),
+            ]
+        );
         $user->assignRole(RoleEnum::User);
 
-        $user = User::create([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('password'),
-        ]);
+        $user = User::createOrFirst(
+            [
+                'email' => 'admin@gmail.com',
+            ],
+            [
+                'name' => 'Admin',
+                'password' => Hash::make('password'),
+            ]
+        );
         $user->assignRole(RoleEnum::Admin);
     }
 }

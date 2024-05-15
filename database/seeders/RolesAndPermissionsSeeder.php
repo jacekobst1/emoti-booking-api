@@ -12,7 +12,7 @@ final class RolesAndPermissionsSeeder extends Seeder
 {
     public function run(): void
     {
-        Role::create(['name' => RoleEnum::Admin]);
-        Role::create(['name' => RoleEnum::User]);
+        Role::createOrFirst(['name' => RoleEnum::Admin->value]);
+        Role::createOrFirst(['name' => RoleEnum::User->value]);
     }
 }
