@@ -27,7 +27,7 @@ final class DeleteReservationTest extends TestCase
         ]);
 
         // when
-        $response = $this->delete('/api/reservations/' . $reservation->id->toString());
+        $response = $this->delete('/api/v1/reservations/' . $reservation->id->toString());
 
         // then
         $response->assertSuccessful();
@@ -42,7 +42,7 @@ final class DeleteReservationTest extends TestCase
         $reservation = Reservation::factory()->create();
 
         // when
-        $response = $this->delete('/api/reservations/' . $reservation->id->toString());
+        $response = $this->delete('/api/v1/reservations/' . $reservation->id->toString());
 
         // then
         $response->assertForbidden();

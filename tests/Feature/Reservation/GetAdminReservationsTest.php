@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Feature\Reservation;
+namespace Tests\Feature\Reservation;
 
 use App\Modules\Reservation\Domain\Models\Reservation;
 use Tests\Helpers\SanctumTrait;
@@ -25,7 +25,7 @@ final class GetAdminReservationsTest extends TestCase
         Reservation::factory()->create();
 
         // when
-        $response = $this->getJson('/api/admin/reservations');
+        $response = $this->getJson('/api/v1/admin/reservations');
 
         // then
         $response->assertSuccessful();

@@ -27,7 +27,7 @@ final class GetReservationsTest extends TestCase
         ]);
 
         // when
-        $response = $this->getJson('/api/reservations');
+        $response = $this->getJson('/api/v1/reservations');
 
         // then
         $response->assertSuccessful();
@@ -75,7 +75,7 @@ final class GetReservationsTest extends TestCase
         ]);
 
         // when
-        $response = $this->getJson('/api/reservations');
+        $response = $this->getJson('/api/v1/reservations');
 
         // then
         $response->assertSuccessful();

@@ -43,7 +43,7 @@ final class PostReservationTest extends TestCase
         }
 
         // when
-        $response = $this->postJson('/api/reservations', $data);
+        $response = $this->postJson('/api/v1/reservations', $data);
 
         // then
         $response->assertSuccessful();
@@ -61,7 +61,7 @@ final class PostReservationTest extends TestCase
         ];
 
         // when
-        $response = $this->postJson('/api/reservations', $data);
+        $response = $this->postJson('/api/v1/reservations', $data);
 
         // then
         $response->assertUnprocessable();
@@ -85,7 +85,7 @@ final class PostReservationTest extends TestCase
         ];
 
         // when
-        $response = $this->postJson('/api/reservations', $data);
+        $response = $this->postJson('/api/v1/reservations', $data);
 
         // then
         $response->assertConflict();
@@ -103,7 +103,7 @@ final class PostReservationTest extends TestCase
         ];
 
         // when
-        $response = $this->postJson('/api/reservations', $data);
+        $response = $this->postJson('/api/v1/reservations', $data);
 
         // then
         $response->assertConflict();
