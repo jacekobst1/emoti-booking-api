@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Reservation\Application\Http\Controllers;
+namespace App\Modules\Reservation\Application\Http\Controllers\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Exceptions\ConflictException;
