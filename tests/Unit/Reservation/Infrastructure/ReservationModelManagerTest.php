@@ -14,10 +14,10 @@ final class ReservationModelManagerTest extends TestCase
     {
         // given
         $properties = ['date_from' => '2022-01-01', 'date_to' => '2022-01-02', 'total_price' => 90000];
-        $repository = $this->app->make(ReservationModelManager::class);
+        $manager = $this->app->make(ReservationModelManager::class);
 
         // when
-        $result = $repository->newInstance($properties);
+        $result = $manager->newInstance($properties);
 
         // then
         $this->assertInstanceOf(Reservation::class, $result);
@@ -30,10 +30,10 @@ final class ReservationModelManagerTest extends TestCase
     {
         // given
         $reservation = Reservation::factory()->make();
-        $repository = $this->app->make(ReservationModelManager::class);
+        $manager = $this->app->make(ReservationModelManager::class);
 
         // when
-        $repository->save($reservation);
+        $manager->save($reservation);
 
         // then
         $this->assertDatabaseHas('reservations', [
@@ -42,5 +42,18 @@ final class ReservationModelManagerTest extends TestCase
             'date_to' => $reservation->date_to,
             'total_price' => $reservation->total_price,
         ]);
+    }
+
+    public function testDelete(): void
+    {
+        // given
+        $reservation = Reservation::factory()->create();
+        $manager = $this->app->make(ReservationModelManager::class);
+
+        // when
+        $manager->delete($reservation);
+
+        // then
+        $this->assertDatabaseMissing('reservations', ['id' => $reservation->id]);
     }
 }

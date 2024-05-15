@@ -17,4 +17,5 @@ test('Facades should not be used - use DI instead')
         'App\Actions\Fortify\UpdateUserProfileInformation',
 
         'Illuminate\Support\Facades\DB',
+        'Illuminate\Support\Facades\Gate',
     ]);

@@ -161,6 +161,30 @@
                     }
                 }
             }
+        },
+        "/api/reservations/{id}": {
+            "delete": {
+                "tags": [
+                    "reservations"
+                ],
+                "summary": "Delete the reservation",
+                "description": "Delete the reservation",
+                "operationId": "delete-reservation",
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/deleted"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/unauthenticated"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/unauthorized"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/error"
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -355,6 +379,36 @@
             }
         },
         "responses": {
+            "deleted": {
+                "description": "Resource deleted",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "integer",
+                                    "example": "200"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "example": "Resource deleted"
+                                },
+                                "data": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "7d20ed5d-9d6c-3bcb-9fa6-75d659abfa7a"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            },
             "created": {
                 "description": "Resource created",
                 "content": {
@@ -369,10 +423,15 @@
                                     "type": "string",
                                     "example": "Resource created"
                                 },
-                                "id": {
-                                    "type": "string",
-                                    "format": "uuid",
-                                    "example": "7d20ed5d-9d6c-3bcb-9fa6-75d659abfa7a"
+                                "data": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "string",
+                                            "format": "uuid",
+                                            "example": "7d20ed5d-9d6c-3bcb-9fa6-75d659abfa7a"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             },
                             "type": "object"

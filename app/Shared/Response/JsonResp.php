@@ -36,11 +36,24 @@ final class JsonResp
      * @param UuidInterface $id
      * @return JsonResponse
      */
+    public static function deleted(UuidInterface $id): JsonResponse
+    {
+        return response()->json([
+            'status' => JsonResponse::HTTP_OK,
+            'message' => 'Resource deleted',
+            'data' => ['id' => $id->toString()],
+        ], JsonResponse::HTTP_OK);
+    }
+
+    /**
+     * @param UuidInterface $id
+     * @return JsonResponse
+     */
     public static function created(UuidInterface $id): JsonResponse
     {
         return response()->json([
             'status' => JsonResponse::HTTP_CREATED,
-            'message' => 'Created',
+            'message' => 'Resource created',
             'data' => ['id' => $id->toString()],
         ], JsonResponse::HTTP_CREATED);
     }

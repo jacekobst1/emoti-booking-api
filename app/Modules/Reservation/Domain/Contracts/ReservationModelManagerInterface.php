@@ -14,4 +14,6 @@ interface ReservationModelManagerInterface
     public function newInstance(array $properties): Reservation;
 
     public function save(Reservation $model): void;
+
+    public function delete(Reservation $model): void;
 }

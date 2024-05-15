@@ -9,11 +9,16 @@ use App\Http\Exceptions\ConflictException;
 use App\Modules\Reservation\Application\Http\Requests\PostReservationRequest;
 use App\Modules\Reservation\Application\Http\Resources\AdminReservationResource;
 use App\Modules\Reservation\Application\Http\Resources\ReservationResource;
+use App\Modules\Reservation\Application\Policies\ReservationPolicy;
 use App\Modules\Reservation\Domain\Contracts\ReservationCreatorInterface;
+use App\Modules\Reservation\Domain\Contracts\ReservationDestroyerInterface;
 use App\Modules\Reservation\Domain\Contracts\ReservationGetterInterface;
+use App\Modules\Reservation\Domain\Models\Reservation;
 use App\Shared\Response\JsonResp;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Gate;
 use OpenApi\Annotations as OA;
 use Throwable;
 
@@ -147,5 +152,43 @@ final class ReservationController extends Controller
         $reservation = $reservationCreator->handle($request->toArray());
 
         return JsonResp::created($reservation->id);
+    }
+
+    /**
+     * @OA\Delete (
+     *     path="/api/reservations/{id}",
+     *     summary="Delete the reservation",
+     *     description="Delete the reservation",
+     *     operationId="delete-reservation",
+     *     tags={"reservations"},
+     *     @OA\Response(
+     *        response="200",
+     *        ref="#/components/responses/deleted"
+     *     ),
+     *     @OA\Response(
+     *        response="401",
+     *        ref="#/components/responses/unauthenticated"
+     *     ),
+     *     @OA\Response(
+     *        response="403",
+     *        ref="#/components/responses/unauthorized"
+     *     ),
+     *     @OA\Response(
+     *        response="500",
+     *        ref="#/components/responses/error"
+     *     ),
+     * )
+     *
+     * @throws AuthorizationException
+     */
+    public function deleteReservation(
+        Reservation $reservation,
+        ReservationDestroyerInterface $destroyer,
+    ): JsonResponse {
+        Gate::authorize(ReservationPolicy::DELETE, $reservation);
+
+        $destroyer->delete($reservation);
+
+        return JsonResp::deleted($reservation->id);
     }
 }

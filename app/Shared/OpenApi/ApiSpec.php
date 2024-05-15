@@ -32,12 +32,22 @@ use OpenApi\Annotations as OA;
  * ---------- Common responses ----------
  *
  * @OA\Response(
+ *    response="deleted",
+ *    description="Resource deleted",
+ *    @OA\JsonContent(
+ *       @OA\Property(property="status", type="integer", example="200"),
+ *       @OA\Property(property="message", type="string", example="Resource deleted"),
+ *       @OA\Property(property="data", type="object", @OA\Property(property="id", type="string", format="uuid", example="7d20ed5d-9d6c-3bcb-9fa6-75d659abfa7a"))
+ *    )
+ *  )
+ *
+ * @OA\Response(
  *    response="created",
  *    description="Resource created",
  *    @OA\JsonContent(
  *       @OA\Property(property="code", type="integer", example="201"),
  *       @OA\Property(property="message", type="string", example="Resource created"),
- *       @OA\Property(property="id", type="string", format="uuid", example="7d20ed5d-9d6c-3bcb-9fa6-75d659abfa7a")
+ *       @OA\Property(property="data", type="object", @OA\Property(property="id", type="string", format="uuid", example="7d20ed5d-9d6c-3bcb-9fa6-75d659abfa7a"))
  *    )
  * )
  *

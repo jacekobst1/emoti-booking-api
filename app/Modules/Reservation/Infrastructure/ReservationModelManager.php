@@ -9,6 +9,9 @@ use App\Modules\Reservation\Domain\Models\Reservation;
 
 final class ReservationModelManager implements ReservationModelManagerInterface
 {
+    /**
+     * @param array{non-empty-string, mixed} $properties
+     */
     public function newInstance(array $properties = []): Reservation
     {
         return new Reservation($properties);
@@ -17,5 +20,10 @@ final class ReservationModelManager implements ReservationModelManagerInterface
     public function save(Reservation $model): void
     {
         $model->save();
+    }
+
+    public function delete(Reservation $model): void
+    {
+        $model->delete();
     }
 }

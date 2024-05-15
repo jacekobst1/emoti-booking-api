@@ -25,6 +25,7 @@ Route::middleware(['auth:sanctum', "role:$user"])->group(function () {
     Route::prefix('/reservations')->group(function () {
         Route::get('/', [ReservationController::class, 'getUserReservationsList']);
         Route::post('/', [ReservationController::class, 'postReservation']);
+        Route::delete('/{reservation}', [ReservationController::class, 'deleteReservation']);
     });
 });
 
