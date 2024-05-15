@@ -15,5 +15,5 @@
 6. Run `vendor/bin/sail composer install`
 7. Run `vendor/bin/sail artisan key:generate`
 8. Run `vendor/bin/sail artisan migrate --seed`
-9. Add new entry in _/etc/hosts_: `127.0.0.1 emoti-booking-api.test`
-10. Try it: [http://emoti-booking-api.test/api/documentation](http://emoti-booking-api.test/api/documentation) 🙂
+9. Add new entry in _/etc/hosts_: `127.0.0.1 emoti-booking.test`
+10. Try it: [http://emoti-booking.test/api/documentation](http://emoti-booking.test/api/documentation) 🙂
