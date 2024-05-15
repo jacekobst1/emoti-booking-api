@@ -45,7 +45,7 @@ final class SlotDtoCollection extends Collection
     }
 
     /**
-     * @return self<string, SlotDtoCollection<int, SlotDto>>
+     * @return SlotDtoCollection<string, SlotDtoCollection<int, SlotDto>>
      */
     public function groupByAssetId(): self
     {

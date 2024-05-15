@@ -40,7 +40,7 @@ class Slot extends Model
     }
 
     /**
-     * @return BelongsTo<Asset>
+     * @return BelongsTo<Asset, Slot>
      */
     public function asset(): BelongsTo
     {
@@ -48,7 +48,7 @@ class Slot extends Model
     }
 
     /**
-     * @return BelongsTo<Reservation>
+     * @return BelongsTo<Reservation, Slot>
      */
     public function reservation(): BelongsTo
     {

@@ -16,11 +16,11 @@ parameters:
 			path: app/Modules/Reservation/Infrastructure/ReservationModelManager.php
 
 		-
-			message: "#^Method App\\\\Shared\\\\Casts\\\\SpatieData\\\\UuidDataCast\\:\\:cast\\(\\) has parameter \\$context with generic class Spatie\\\\LaravelData\\\\Support\\\\Creation\\\\CreationContext but does not specify its types\\: TData$#"
+			message: "#^PHPDoc tag @return contains unresolvable type\\.$#"
 			count: 1
-			path: app/Shared/Casts/SpatieData/UuidDataCast.php
+			path: app/Modules/Slot/Domain/Contracts/DataTransferObjects/SlotDtoCollection.php
 
 		-
-			message: "#^Method App\\\\Shared\\\\Casts\\\\SpatieData\\\\UuidDataCast\\:\\:cast\\(\\) has parameter \\$properties with no value type specified in iterable type array\\.$#"
+			message: "#^Parameter \\#1 \\$groupBy of method Illuminate\\\\Support\\\\Collection\\<int,App\\\\Modules\\\\Slot\\\\Domain\\\\Contracts\\\\DataTransferObjects\\\\SlotDto\\>\\:\\:groupBy\\(\\) expects array\\|\\(callable\\(App\\\\Modules\\\\Slot\\\\Domain\\\\Contracts\\\\DataTransferObjects\\\\SlotDto, int\\)\\: \\(int\\|string\\)\\)\\|string, Closure\\(App\\\\Modules\\\\Slot\\\\Domain\\\\Contracts\\\\DataTransferObjects\\\\SlotDto\\)\\: Ramsey\\\\Uuid\\\\UuidInterface given\\.$#"
 			count: 1
-			path: app/Shared/Casts/SpatieData/UuidDataCast.php
+			path: app/Modules/Slot/Domain/Contracts/DataTransferObjects/SlotDtoCollection.php

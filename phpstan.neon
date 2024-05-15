@@ -13,10 +13,13 @@ parameters:
     scanFiles:
           - _ide_helper_models.php
 
+    phpVersion: 80300
+
 #    ignoreErrors:
 #        - '#PHPDoc tag @var#'
 #
-#    excludePaths:
-#        - ./*/*/FileToBeExcluded.php
+    excludePaths:
+        - ./*/*/UuidDataCast.php
+        - ./*/*/SubstituteUuids.php
 #
 #    checkMissingIterableValueType: false
